@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppScreenConst.splash,
       getPages: AppPages.pages,
+      theme: ThemeData(colorSchemeSeed: Colors.green),
     );
   }
 }

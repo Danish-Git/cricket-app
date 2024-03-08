@@ -7,6 +7,13 @@ const String registerUrl = 'Login?Add=null';
 
 /////// home screen
 
+///// quiz part
+
+const getQuizQuestionUrl = '${_baseUrl}Quiz?GET=null';
+const saveQuizAnswerUrl = '${_baseUrl}Quiz?Ans=null';
+
+////
+
 const getALlTournamentsUrl = '${_baseUrl}Tournaments?GET=27';
 const getALlMatchesOfTournamentsUrl = '${_baseUrl}Match?GET=27';
 const pointsTableOfTournamentsUrl = '${_baseUrl}PointsTable?GET=27';

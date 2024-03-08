@@ -4,6 +4,36 @@ import '../api_methods/api_methods.dart';
 class HomeRepo {
   final ApiMethods _apiMethods = ApiMethods();
 
+  Future<ApiResponse> getQuizQuestionHome() {
+    return _apiMethods.postRequest(url: getQuizQuestionUrl, body: {}).then(
+      (value) => ApiResponse(
+        status: value.status,
+        data: value.status ? value.data : null,
+        message: value.message,
+        statusCode: value.statusCode,
+      ),
+    );
+  }
+
+  Future<ApiResponse> saveQuizQuestionAnswerHome({
+    required String mobile,
+    required String quizId,
+    required String answer,
+  }) {
+    return _apiMethods.postRequest(url: saveQuizAnswerUrl, body: {
+      'Mobile': mobile,
+      'QuizID': quizId,
+      'Answer': answer,
+    }).then(
+      (value) => ApiResponse(
+        status: value.status,
+        data: value.status ? value.data : null,
+        message: value.message,
+        statusCode: value.statusCode,
+      ),
+    );
+  }
+
   Future<ApiResponse> getALlTournamentsHome() {
     return _apiMethods.postRequest(
         url: getALlTournamentsUrl, body: {'TournamentsID': '3'}).then(

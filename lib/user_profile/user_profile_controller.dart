@@ -88,7 +88,7 @@ class UserProfileController extends GetxController {
     );
     if (photo != null) {
       imgPath = photo.path;
-      update();
+      updateUserProfile();
     }
   }
 
@@ -100,6 +100,8 @@ class UserProfileController extends GetxController {
       Get.back();
       if (value.status) {
         showTopSnackBarSuccessColor(value.message.toString());
+        userProfile.clear();
+        getUserDetail();
       } else {
         showTopSnackBarError(value.message.toString());
       }

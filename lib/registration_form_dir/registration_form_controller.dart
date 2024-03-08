@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cricket/app_utils/loader_message_utils.dart';
+import 'package:cricket/routing_dir/app_screen_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -116,6 +117,7 @@ class RegistrationFormController extends GetxController {
       Get.back();
       if (value.status) {
         showTopSnackBarSuccessColor(value.message.toString());
+        Get.toNamed(AppScreenConst.paymentOption);
       } else {
         showTopSnackBarError(value.message.toString());
       }

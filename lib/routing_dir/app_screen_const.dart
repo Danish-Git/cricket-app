@@ -15,5 +15,11 @@ abstract class AppScreenConst {
   static const userProfile = '/userProfile';
   static const registrationFormScreen = '/registrationFormScreen';
 
+  ////// payment module
+  static const paymentOption = '/paymentOption';
+  static const paymentDone = '/paymentDone';
+
+
+
 //// ends here
 }

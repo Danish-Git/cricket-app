@@ -108,9 +108,6 @@ class UserProfileScreen extends StatelessWidget {
                       child: Stack(
                         children: [
                           Positioned(
-                            // top: 0,
-                            // bottom: 0,
-                            // left: 0,
                             right: 12,
                             child: Image.network(
                               helmet,

@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:cricket/home/response/quiz_question_response.dart';
 import 'package:cricket/routing_dir/app_screen_const.dart';
 import 'package:cricket/user_profile/UserProfileRepo.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    quizQuestion();
     getUserDetail();
   }
 
@@ -29,6 +31,31 @@ class HomeController extends GetxController {
         UserProfileResponse response = UserProfileResponse.fromJson(value.data);
         userName = response.data[0].UserName;
         userImg = response.data[0].ProfilePicture;
+      }
+    });
+  }
+
+  List<QuizQuestionList> questionList = [];
+
+  int selectedAns = 9;
+
+  void quizQuestion() {
+    _homeRepo.getQuizQuestionHome().then((value) {
+      if (value.status) {
+        QuizQuestionResponse response =
+            QuizQuestionResponse.fromJson(value.data);
+        questionList.addAll(response.data);
+      }
+    });
+  }
+
+  void saveQuizAnswer(String id, String answer) {
+    _homeRepo
+        .saveQuizQuestionAnswerHome(
+            mobile: '7087359973', quizId: id, answer: answer)
+        .then((value) {
+      if (value.status) {
+        print(value.message.toString());
       }
     });
   }
@@ -261,6 +288,15 @@ class HomeController extends GetxController {
       ),
     );
   }
+
+  //////////
+
+  final iconList = <IconData>[
+    Icons.home,
+    Icons.live_tv,
+    Icons.browse_gallery,
+    Icons.person,
+  ];
 }
 
 String timeAgoFun(String data) {
