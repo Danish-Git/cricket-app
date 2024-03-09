@@ -15,8 +15,6 @@ class HomeController extends GetxController {
 
   bool isLoading = true;
 
-  int selectedNavigationItem = 0;
-
   @override
   void onInit() {
     super.onInit();
@@ -299,35 +297,6 @@ class HomeController extends GetxController {
     Icons.browse_gallery,
     Icons.person,
   ];
-
-  void setBottomNavigationBarSelectedItem(int position) {
-    selectedNavigationItem = position;
-    update();
-  }
-
-  void setQuizAnswer(int selectedAnswer, QuizQuestionList question) {
-    selectedAns = selectedAnswer;
-    update();
-    if(correctAnswerIndex(question) == selectedAns) {
-      //  correct answer
-    } else {
-      //  wrong answer
-    }
-  }
-
-  int correctAnswerIndex(QuizQuestionList question) {
-    if(question.CorrectOption == question.Option1) {
-      return 1;
-    } else if(question.CorrectOption == question.Option2) {
-      return 2;
-    } else if(question.CorrectOption == question.Option3) {
-      return 3;
-    } else if(question.CorrectOption == question.Option4) {
-      return 4;
-    } else {
-      return 0;
-    }
-  }
 }
 
 String timeAgoFun(String data) {
