@@ -48,7 +48,6 @@ class PaymentDoneScreen extends StatelessWidget {
                         height: 150,
                         child: SvgPicture.asset(
                           'assets/payment_done.svg',
-                          // height: 150,
                           fit: BoxFit.cover,
                           semanticsLabel: 'Logo',
                         ),

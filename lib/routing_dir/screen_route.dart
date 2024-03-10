@@ -16,6 +16,7 @@ import 'package:cricket/user_profile/user_profile_screen.dart';
 import 'package:cricket/welcome/welcome_binding.dart';
 import 'package:cricket/welcome/welcome_screen.dart';
 import 'package:get/get.dart';
+import '../bottom_nav_dir/bottom_nav_screen.dart';
 import '../login/login_binding.dart';
 import '../registration_form_dir/registration_form_binding.dart';
 import '../registration_form_dir/registration_form_screen.dart';
@@ -43,6 +44,10 @@ abstract class AppPages {
       name: AppScreenConst.otpScreen,
       page: () => const OtpScreen(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: AppScreenConst.bottomNav,
+      page: () => const BottomNavScreen(),
     ),
     GetPage(
       name: AppScreenConst.home,

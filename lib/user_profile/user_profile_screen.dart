@@ -19,6 +19,7 @@ class UserProfileScreen extends StatelessWidget {
       init: UserProfileController(),
       global: false,
       builder: (controller) => Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: controller.userProfile.isEmpty
               ? const ShowLoaderWgt()
@@ -92,10 +93,18 @@ class UserProfileScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 12, top: 6),
-                          child: CustomAppBar(
-                              label: 'User Profile', isGreen: false),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Center(
+                            child: Text(
+                              'User Profile',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: ColorConstants().blackColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -119,9 +128,38 @@ class UserProfileScreen extends StatelessWidget {
                           ),
                           Column(
                             children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.updateUserProfileDetails();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: ColorConstants().greenColor,
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Update',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               LabelTxtController(
                                 label: 'Full Name',
-                                isReadOnly: true,
+                                isReadOnly: false,
                                 textEditingController:
                                     controller.nameController,
                               ),
@@ -133,7 +171,7 @@ class UserProfileScreen extends StatelessWidget {
                               ),
                               LabelTxtController(
                                 label: 'E-mail',
-                                isReadOnly: true,
+                                isReadOnly: false,
                                 textEditingController:
                                     controller.emailController,
                               ),

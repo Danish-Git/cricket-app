@@ -7,6 +7,7 @@ abstract class AppScreenConst {
 
   //////
 
+  static const bottomNav = '/bottomNav';
   static const home = '/home';
   static const matchDetail = '/matchDetail';
   static const teamDetail = '/teamDetail';
@@ -18,8 +19,6 @@ abstract class AppScreenConst {
   ////// payment module
   static const paymentOption = '/paymentOption';
   static const paymentDone = '/paymentDone';
-
-
 
 //// ends here
 }

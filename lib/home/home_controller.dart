@@ -8,20 +8,16 @@ import '../user_profile/user_profile_response.dart';
 import 'home_repo.dart';
 import '../response_dir/get_all_tournament_response.dart';
 import 'response/notification_response.dart';
-import 'package:timeago/timeago.dart' as timeAgo;
 
 class HomeController extends GetxController {
   final HomeRepo _homeRepo = HomeRepo();
-
   bool isLoading = true;
-
-  int selectedNavigationItem = 0;
 
   @override
   void onInit() {
     super.onInit();
-    quizQuestion();
     getUserDetail();
+    getAllNotifications();
   }
 
   String userName = '';
@@ -36,6 +32,22 @@ class HomeController extends GetxController {
       }
     });
   }
+
+/////   NOTIFICATION
+
+  List<NotificationList> notificationList = [];
+
+  void getAllNotifications() {
+    _homeRepo.getAllNotificationsApi().then((value) {
+      if (value.status == true) {
+        NotificationResponse notificationResponse =
+            NotificationResponse.fromJson(value.data);
+        notificationList.addAll(notificationResponse.data);
+      }
+    });
+  }
+
+  //////
 
   List<QuizQuestionList> questionList = [];
 
@@ -97,7 +109,7 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    getAllNotifications();
+    quizQuestion();
     getAllTournament();
   }
 
@@ -220,95 +232,12 @@ class HomeController extends GetxController {
     });
   }
 
-/////  ON NOTIFICATION TAP
-
-  List<NotificationList> notificationList = [];
-
-  void getAllNotifications() {
-    _homeRepo.getAllNotificationsApi().then((value) {
-      if (value.status == true) {
-        NotificationResponse notificationResponse =
-            NotificationResponse.fromJson(value.data);
-
-        notificationList.addAll(notificationResponse.data);
-      }
-    });
-  }
-
-  void onNotificationTap() {
-    Get.bottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-        side: BorderSide(width: 1, color: Colors.transparent),
-      ),
-      Container(
-        height: Get.height * 0.8,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-        ),
-        child: Column(
-          children: [
-            Container(
-              height: 5,
-              width: 40,
-              margin: const EdgeInsets.only(top: 16),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(60, 60, 67, 0.3),
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                'Notifications',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Color.fromRGBO(0, 0, 0, 1),
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: notificationList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return NotificationItem(
-                    index: index,
-                    notificationTitle: notificationList[index].Notification,
-                    dateTime:
-                        timeAgoFun(notificationList[index].NotificationDT),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   //////////
-
-  final iconList = <IconData>[
-    Icons.home,
-    Icons.live_tv,
-    Icons.browse_gallery,
-    Icons.person,
-  ];
-
-  void setBottomNavigationBarSelectedItem(int position) {
-    selectedNavigationItem = position;
-    update();
-  }
 
   void setQuizAnswer(int selectedAnswer, QuizQuestionList question) {
     selectedAns = selectedAnswer;
     update();
-    if(correctAnswerIndex(question) == selectedAns) {
+    if (correctAnswerIndex(question) == selectedAns) {
       //  correct answer
     } else {
       //  wrong answer
@@ -316,84 +245,16 @@ class HomeController extends GetxController {
   }
 
   int correctAnswerIndex(QuizQuestionList question) {
-    if(question.CorrectOption == question.Option1) {
+    if (question.CorrectOption == question.Option1) {
       return 1;
-    } else if(question.CorrectOption == question.Option2) {
+    } else if (question.CorrectOption == question.Option2) {
       return 2;
-    } else if(question.CorrectOption == question.Option3) {
+    } else if (question.CorrectOption == question.Option3) {
       return 3;
-    } else if(question.CorrectOption == question.Option4) {
+    } else if (question.CorrectOption == question.Option4) {
       return 4;
     } else {
       return 0;
     }
-  }
-}
-
-String timeAgoFun(String data) {
-  return timeAgo.format(DateTime.parse(data), locale: 'en_short');
-}
-
-class NotificationItem extends StatelessWidget {
-  final String notificationTitle;
-  final int index;
-  final String dateTime;
-
-  const NotificationItem({
-    super.key,
-    required this.notificationTitle,
-    required this.index,
-    required this.dateTime,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.03)),
-        ),
-      ),
-      child: ListTile(
-        tileColor: const Color.fromRGBO(0, 0, 0, 0.03),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        leading: Container(
-          height: 48,
-          width: 48,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(226, 232, 240, 1),
-            shape: BoxShape.circle,
-          ),
-          child: const Text(
-            'AB',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(115, 131, 155, 1),
-            ),
-          ),
-        ),
-        title: Text(
-          notificationTitle,
-          maxLines: 5,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Color.fromRGBO(51, 65, 85, 1),
-          ),
-        ),
-        trailing: Text(
-          dateTime,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: Color.fromRGBO(71, 85, 105, 1),
-          ),
-        ),
-      ),
-    );
   }
 }

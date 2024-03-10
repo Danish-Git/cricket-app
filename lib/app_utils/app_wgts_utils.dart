@@ -67,6 +67,7 @@ class LabelTxtController extends StatelessWidget {
       child: TextField(
         controller: textEditingController,
         readOnly: isReadOnly,
+        maxLength: 40,
         style: const TextStyle(
           color: Color.fromRGBO(0, 0, 0, 1),
           fontSize: 14,
@@ -74,6 +75,7 @@ class LabelTxtController extends StatelessWidget {
         ),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(top: 4),
+          counterText: '',
           label: Text(label),
           labelStyle: const TextStyle(
             color: Color.fromRGBO(150, 150, 150, 1),

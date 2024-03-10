@@ -1,6 +1,6 @@
-import 'dart:developer';
+import 'package:cricket/home/match_detail/table_wgt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 /// Homepage
@@ -13,32 +13,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late YoutubePlayerController _controller;
-  late TextEditingController _idController;
-  late TextEditingController _seekToController;
 
   late PlayerState _playerState;
   late YoutubeMetaData _videoMetaData;
-  double _volume = 100;
-  bool _muted = false;
-  bool _isPlayerReady = false;
 
-  final List<String> _ids = [
-    'nPt8bK2gbaU',
-    'gQDByCdjUXw',
-    'iLnmTe5Q2Qw',
-    '_WoCV4c6XOE',
-    'KmzdUe0RSJo',
-    '6jZDSSZZxjQ',
-    'p2lYr3vM_1w',
-    '7QUtEmBT_-w',
-    '34_PXCzGw1M',
-  ];
+  final bool _isPlayerReady = false;
 
   @override
   void initState() {
     super.initState();
+    String videoId = YoutubePlayer.convertUrlToId(
+        'https://www.youtube.com/watch?v=H5d0gIyZ0CY&ab_channel=StarSports')!;
     _controller = YoutubePlayerController(
-      initialVideoId: _ids.first,
+      initialVideoId: videoId,
       flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: true,
@@ -46,21 +33,19 @@ class _MyHomePageState extends State<MyHomePage> {
         loop: false,
         isLive: false,
         forceHD: false,
-        enableCaption: true,
+        enableCaption: false,
       ),
     )..addListener(listener);
-    _idController = TextEditingController();
-    _seekToController = TextEditingController();
     _videoMetaData = const YoutubeMetaData();
     _playerState = PlayerState.unknown;
   }
 
   void listener() {
     if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-      setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
-      });
+      // setState(() {
+      //   _playerState = _controller.value.playerState;
+      //   _videoMetaData = _controller.metadata;
+      // });
     }
   }
 
@@ -73,321 +58,640 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     _controller.dispose();
-    _idController.dispose();
-    _seekToController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerBuilder(
-      onExitFullScreen: () {
-      },
+      onExitFullScreen: () {},
+
       player: YoutubePlayer(
         controller: _controller,
         showVideoProgressIndicator: true,
         progressIndicatorColor: Colors.blueAccent,
-        topActions: <Widget>[
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: Text(
-              _controller.metadata.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 25.0,
-            ),
-            onPressed: () {
-              log('Settings Tapped!');
-            },
-          ),
-        ],
-        onReady: () {
-          _isPlayerReady = true;
-        },
-        onEnded: (data) {
-          _controller
-              .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
-          _showSnackBar('Next Video Started!');
-        },
       ),
-      builder: (context, player) => Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Youtube Player Flutter',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        body: ListView(
-          children: [
-            player,
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _space,
-                  _text('Title', _videoMetaData.title),
-                  _space,
-                  _text('Channel', _videoMetaData.author),
-                  _space,
-                  _text('Video Id', _videoMetaData.videoId),
-                  _space,
-                  Row(
-                    children: [
-                      _text(
-                        'Playback Quality',
-                        _controller.value.playbackQuality ?? '',
-                      ),
-                      const Spacer(),
-                      _text(
-                        'Playback Rate',
-                        '${_controller.value.playbackRate}x  ',
-                      ),
-                    ],
-                  ),
-                  _space,
-                  TextField(
-                    enabled: _isPlayerReady,
-                    controller: _idController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Enter youtube \<video id\> or \<link\>',
-                      fillColor: Colors.blueAccent.withAlpha(20),
-                      filled: true,
-                      hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                        color: Colors.blueAccent,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () => _idController.clear(),
-                      ),
-                    ),
-                  ),
-                  _space,
-                  Row(
-                    children: [
-                      _loadCueButton('LOAD'),
-                      const SizedBox(width: 10.0),
-                      _loadCueButton('CUE'),
-                    ],
-                  ),
-                  _space,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.skip_previous),
-                        onPressed: _isPlayerReady
-                            ? () => _controller.load(_ids[
-                                (_ids.indexOf(_controller.metadata.videoId) -
-                                        1) %
-                                    _ids.length])
-                            : null,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          _controller.value.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                        ),
-                        onPressed: _isPlayerReady
-                            ? () {
-                                _controller.value.isPlaying
-                                    ? _controller.pause()
-                                    : _controller.play();
-                                setState(() {});
-                              }
-                            : null,
-                      ),
-                      IconButton(
-                        icon: Icon(_muted ? Icons.volume_off : Icons.volume_up),
-                        onPressed: _isPlayerReady
-                            ? () {
-                                _muted
-                                    ? _controller.unMute()
-                                    : _controller.mute();
-                                setState(() {
-                                  _muted = !_muted;
-                                });
-                              }
-                            : null,
-                      ),
-                      FullScreenButton(
-                        controller: _controller,
-                        color: Colors.blueAccent,
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.skip_next),
-                        onPressed: _isPlayerReady
-                            ? () => _controller.load(_ids[
-                                (_ids.indexOf(_controller.metadata.videoId) +
-                                        1) %
-                                    _ids.length])
-                            : null,
-                      ),
-                    ],
-                  ),
-                  _space,
-                  Row(
-                    children: <Widget>[
-                      const Text(
-                        "Volume",
-                        style: TextStyle(fontWeight: FontWeight.w300),
-                      ),
-                      Expanded(
-                        child: Slider(
-                          inactiveColor: Colors.transparent,
-                          value: _volume,
-                          min: 0.0,
-                          max: 100.0,
-                          divisions: 10,
-                          label: '${(_volume).round()}',
-                          onChanged: _isPlayerReady
-                              ? (value) {
-                                  setState(() {
-                                    _volume = value;
-                                  });
-                                  _controller.setVolume(_volume.round());
-                                }
-                              : null,
-                        ),
-                      ),
-                    ],
-                  ),
-                  _space,
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 800),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: _getStateColor(_playerState),
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      _playerState.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
+      builder: (context, player) => DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: player,
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  children: [
+                    const TabBar(
+                      indicatorWeight: 4,
+                      indicatorColor: Colors.green,
+                      dividerColor: Colors.green,
+                      unselectedLabelColor: Colors.grey,
+                      labelColor: Colors.green,
+                      tabs: [
+                        Tab(text: 'Live'),
+                        Tab(text: 'Scorecard'),
+                        Tab(text: 'Commentary'),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          //////  LIVE TAB VIEW
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                ////// match title
+
+                                SizedBox(
+                                  height: 60,
+                                  width: double.maxFinite,
+                                  child: ListTile(
+                                    title:
+                                        const Text('BANGLADESH TOUR OF INDIA'),
+                                    subtitle:
+                                        const Text('1ST ODI,AT HYDERABAD'),
+                                    trailing: Container(
+                                      width: 65,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: Colors.red,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 4,
+                                            margin:
+                                                const EdgeInsets.only(right: 4),
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const Text(
+                                            'LIVE',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 12, bottom: 16),
+                                  child: Divider(color: Colors.grey),
+                                ),
+
+                                ///////  match score
+
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ////////// left side
+
+                                    SizedBox(
+                                      width: Get.width * 0.38,
+                                      child: const Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '233  / ',
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                '4',
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            '36.5 OVERS',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          CustomContainer(),
+                                        ],
+                                      ),
+                                    ),
+///////////
+                                    Container(width: 50),
+///////////
+                                    SizedBox(
+                                      width: Get.width * 0.38,
+                                      child: const Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '233  / ',
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                '4',
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            '36.5 OVERS',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          CustomContainer(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                /////////////////////
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20, bottom: 16),
+                                  child: Divider(color: Colors.grey),
+                                ),
+                                const Text(
+                                  'BAN NEEDS 150 RUNS IN 15.1 OVERS',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Container(
+                                  height: 100,
+                                  width: double.maxFinite,
+                                  margin: const EdgeInsets.only(top: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 20,
+                                  ),
+                                  color: Colors.grey.shade300,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Last 10 Balls',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 14),
+                                      Expanded(
+                                        child: ListView.builder(
+                                            itemCount: 10,
+                                            scrollDirection: Axis.horizontal,
+                                            itemBuilder:
+                                                (BuildContext ctx, int index) {
+                                              return const CustomBallBox(
+                                                label: '3',
+                                                ballScore: BallScore.sixRun,
+                                              );
+                                            }),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  alignment: Alignment.center,
+                                  color: Colors.grey.shade400,
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        'Batsman',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      CustomBox(label: 'R', isLabel: true),
+                                      CustomBox(label: 'B', isLabel: true),
+                                      CustomBox(label: '4s', isLabel: true),
+                                      CustomBox(label: '6s', isLabel: true),
+                                      CustomBox(label: 'SR', isLabel: true),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.5,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 16,
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(helmet),
+                                      ),
+                                      Text(
+                                        '  Batsmen Name Long Text',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      CustomBox(label: '122', isLabel: false),
+                                      CustomBox(label: '111', isLabel: false),
+                                      CustomBox(label: '23', isLabel: false),
+                                      CustomBox(label: '23', isLabel: false),
+                                      CustomBox(
+                                        label: '444.4',
+                                        isLabel: false,
+                                        isLast: true,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.5,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 16,
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(helmet),
+                                      ),
+                                      Text(
+                                        '  Batsmen Name',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      CustomBox(label: '122', isLabel: false),
+                                      CustomBox(label: '111', isLabel: false),
+                                      CustomBox(label: '23', isLabel: false),
+                                      CustomBox(label: '23', isLabel: false),
+                                      CustomBox(
+                                        label: '444.4',
+                                        isLabel: false,
+                                        isLast: true,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 50,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Current Partnership   ',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        '76(42)',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                //// bowler part
+                                Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  alignment: Alignment.center,
+                                  color: Colors.grey.shade400,
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        'Bowlers',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      CustomBox(label: 'O', isLabel: true),
+                                      CustomBox(label: 'M', isLabel: true),
+                                      CustomBox(label: 'R', isLabel: true),
+                                      CustomBox(label: 'W', isLabel: true),
+                                      CustomBox(label: 'ECO', isLabel: true),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.5,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 16,
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(helmet),
+                                      ),
+                                      Text(
+                                        '  Bowler Name Long Text',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      CustomBox(label: '1', isLabel: false),
+                                      CustomBox(label: '2', isLabel: false),
+                                      CustomBox(label: '3', isLabel: false),
+                                      CustomBox(label: '1', isLabel: false),
+                                      CustomBox(
+                                        label: '5.7',
+                                        isLabel: false,
+                                        isLast: true,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.5,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 16,
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(helmet),
+                                      ),
+                                      Text(
+                                        '  Bowler Name',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      CustomBox(label: '1', isLabel: false),
+                                      CustomBox(label: '2', isLabel: false),
+                                      CustomBox(label: '3', isLabel: false),
+                                      CustomBox(label: '1', isLabel: false),
+                                      CustomBox(
+                                        label: '5.7',
+                                        isLabel: false,
+                                        isLast: true,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                ///////
+
+                                Container(
+                                  width: 180,
+                                  height: 50,
+                                  margin: const EdgeInsets.only(
+                                      top: 20, bottom: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(28),
+                                    color: Colors.green,
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.list_alt_sharp,
+                                        size: 26,
+                                        color: Colors.white70,
+                                      ),
+                                      Text(
+                                        '  Full Scorecard',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const Center(
+                            child: Icon(Icons.account_circle),
+                          ),
+                          const Center(
+                            child: Icon(Icons.alarm),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
 
-  Widget _text(String title, String value) {
-    return RichText(
-      text: TextSpan(
-        text: '$title : ',
-        style: const TextStyle(
-          color: Colors.blueAccent,
-          fontWeight: FontWeight.bold,
-        ),
+class CustomContainer extends StatelessWidget {
+  const CustomContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 45,
+      margin: const EdgeInsets.only(top: 18),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        color: Colors.grey.shade300,
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          TextSpan(
-            text: value,
-            style: const TextStyle(
-              color: Colors.blueAccent,
-              fontWeight: FontWeight.w300,
+          CircleAvatar(
+            radius: 14,
+            backgroundImage: NetworkImage(helmet),
+          ),
+          Text(
+            'BAN',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Color _getStateColor(PlayerState state) {
-    switch (state) {
-      case PlayerState.unknown:
-        return Colors.grey[700]!;
-      case PlayerState.unStarted:
-        return Colors.pink;
-      case PlayerState.ended:
-        return Colors.red;
-      case PlayerState.playing:
-        return Colors.blueAccent;
-      case PlayerState.paused:
-        return Colors.orange;
-      case PlayerState.buffering:
-        return Colors.yellow;
-      case PlayerState.cued:
-        return Colors.blue[900]!;
-      default:
-        return Colors.blue;
-    }
-  }
+enum BallScore { normalRun, wicket, fourRun, sixRun }
 
-  Widget get _space => const SizedBox(height: 10);
+class CustomBallBox extends StatelessWidget {
+  final String label;
+  final BallScore ballScore;
 
-  Widget _loadCueButton(String action) {
-    return Expanded(
-      child: MaterialButton(
-        color: Colors.blueAccent,
-        onPressed: _isPlayerReady
-            ? () {
-                if (_idController.text.isNotEmpty) {
-                  var id = YoutubePlayer.convertUrlToId(
-                        _idController.text,
-                      ) ??
-                      '';
-                  if (action == 'LOAD') _controller.load(id);
-                  if (action == 'CUE') _controller.cue(id);
-                  FocusScope.of(context).requestFocus(FocusNode());
-                } else {
-                  _showSnackBar('Source can\'t be empty!');
-                }
-              }
-            : null,
-        disabledColor: Colors.grey,
-        disabledTextColor: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14.0),
-          child: Text(
-            action,
-            style: const TextStyle(
-              fontSize: 18.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            ),
-            textAlign: TextAlign.center,
-          ),
+  const CustomBallBox({
+    super.key,
+    required this.label,
+    required this.ballScore,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 30,
+      width: 30,
+      margin: const EdgeInsets.only(right: 4),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: ballScore == BallScore.fourRun
+            ? Colors.blue
+            : ballScore == BallScore.wicket
+                ? Colors.red
+                : ballScore == BallScore.sixRun
+                    ? Colors.green
+                    : Colors.grey,
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 12,
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
   }
+}
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.w300,
-            fontSize: 16.0,
-          ),
-        ),
-        backgroundColor: Colors.blueAccent,
-        behavior: SnackBarBehavior.floating,
-        elevation: 1.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
+class CustomBox extends StatelessWidget {
+  final String label;
+  final bool isLabel;
+  final bool isLast;
+
+  const CustomBox({
+    super.key,
+    required this.label,
+    required this.isLabel,
+    this.isLast = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: isLast ? 32 : 36,
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 11,
+          color: isLabel ? Colors.black : Colors.grey,
         ),
       ),
     );

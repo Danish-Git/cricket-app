@@ -2,8 +2,6 @@ import 'package:cricket/app_utils/custom_button.dart';
 import 'package:cricket/routing_dir/app_screen_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../app_utils/app_wgts_utils.dart';
 import '../../app_utils/color_constants.dart';
 
 class PaymentOptionController extends GetxController {

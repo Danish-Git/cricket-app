@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cricket/app_utils/loader_message_utils.dart';
 import 'package:cricket/user_profile/UserProfileRepo.dart';
 import 'package:flutter/material.dart';
@@ -102,6 +101,26 @@ class UserProfileController extends GetxController {
         showTopSnackBarSuccessColor(value.message.toString());
         userProfile.clear();
         getUserDetail();
+      } else {
+        showTopSnackBarError(value.message.toString());
+      }
+    });
+  }
+
+  ////////
+
+  void updateUserProfileDetails() {
+    showLoaderDialog();
+    _userProfileRepo
+        .updateUserProfileDetails(
+      number: '0123456789',
+      email: emailController.text.trim(),
+      userName: nameController.text.trim(),
+    )
+        .then((value) {
+      Get.back();
+      if (value.status) {
+        showTopSnackBarSuccessColor(value.message.toString());
       } else {
         showTopSnackBarError(value.message.toString());
       }

@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fancy_bottom_navigation_2/fancy_bottom_navigation.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cricket/home/ui_components/notification_wgt/notification_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_utils/color_constants.dart';
@@ -39,21 +37,18 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 20),
-                                Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 12, top: 20, bottom: 24),
+                                child: Row(
                                   children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: CircleAvatar(
-                                        radius: 26,
-                                        backgroundImage: NetworkImage(
-                                          controller.userImg,
-                                        ),
+                                    CircleAvatar(
+                                      radius: 26,
+                                      backgroundImage: NetworkImage(
+                                        controller.userImg,
                                       ),
                                     ),
                                     Text(
@@ -67,45 +62,41 @@ class HomeScreen extends StatelessWidget {
                                     const Spacer(),
                                     IconButton(
                                       onPressed: () {
-                                        controller.onNotificationTap();
+                                        NotificationUtils().onNotificationTap(
+                                          controller.notificationList,
+                                        );
                                       },
                                       icon: const Icon(
-                                        Icons.notifications,
+                                        Icons.notifications_none,
                                         size: 32,
                                       ),
                                     )
                                   ],
                                 ),
-                                const SizedBox(height: 24),
-                                CustomCarousel(
-                                  boxHgt: 170,
-                                  boxWdt: double.maxFinite,
-                                  itemList: controller.runningTournament,
-                                  index: controller.runningIndex,
-                                  carouselController:
-                                      controller.runningCarouselController,
-                                  onPageChanged: (index, _) {
-                                    controller.onRunningChange(index);
-                                  },
-                                ),
-                                Center(
-                                  child: Text(
-                                    'Question',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: ColorConstants().redColor,
-                                    ),
+                              ),
+                              CustomCarousel(
+                                boxHgt: Get.width * 0.5,
+                                boxWdt: double.maxFinite,
+                                itemList: controller.completeTournament,
+                                index: controller.completedIndex,
+                                carouselController:
+                                    controller.completedCarouselController,
+                                onPageChanged: (index, _) {
+                                  controller.onCompletedChange(index);
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              Center(
+                                child: Text(
+                                  'Question',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorConstants().redColor,
                                   ),
                                 ),
-                                // const Divider(
-                                //   color: Color.fromRGBO(0, 0, 0, 0.07),
-                                //   thickness: 1,
-                                //   indent: 32,
-                                //   endIndent: 32,
-                                // ),
-                              ],
-                            ),
+                              ),
+                            ],
                           )
                         ],
                       ),
@@ -127,8 +118,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       CustomCarousel(
-                        boxHgt: 170,
-                        boxWdt: Get.width * 0.95,
+                        boxHgt: Get.width * 0.5,
+                        boxWdt: double.infinity,
                         itemList: controller.upComingTournament,
                         index: controller.upComingIndex,
                         carouselController:
@@ -155,8 +146,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       CustomCarousel(
-                        boxHgt: 170,
-                        boxWdt: Get.width * 0.95,
+                        boxHgt: Get.width * 0.5,
+                        boxWdt: double.infinity,
                         itemList: controller.runningTournament,
                         index: controller.runningIndex,
                         carouselController:
@@ -185,22 +176,16 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(
-                        height: 170,
-                        width: Get.width * 0.95,
-                        child: CarouselSlider(
-                          items: controller.completeTournament,
-                          carouselController:
-                              controller.completedCarouselController,
-                          options: CarouselOptions(
-                              autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 2),
-                              enlargeCenterPage: true,
-                              aspectRatio: 2.0,
-                              onPageChanged: (index, reason) {
-                                controller.onCompletedChange(index);
-                              }),
-                        ),
+                      CustomCarousel(
+                        boxHgt: Get.width * 0.5,
+                        boxWdt: double.infinity,
+                        itemList: controller.completeTournament,
+                        index: controller.completedIndex,
+                        carouselController:
+                            controller.completedCarouselController,
+                        onPageChanged: (index, _) {
+                          controller.onCompletedChange(index);
+                        },
                       ),
 
                       ///////////////
@@ -222,37 +207,74 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(
-                        height: 170,
-                        width: Get.width * 0.95,
-                        child: CarouselSlider(
-                          items: controller.cancelTournament,
-                          carouselController:
-                              controller.cancelCarouselController,
-                          options: CarouselOptions(
-                              autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 2),
-                              enlargeCenterPage: true,
-                              aspectRatio: 2.0,
-                              onPageChanged: (index, reason) {
-                                controller.onCancelChange(index);
-                              }),
-                        ),
+                      CustomCarousel(
+                        boxHgt: Get.width * 0.5,
+                        boxWdt: double.infinity,
+                        itemList: controller.cancelTournament,
+                        index: controller.cancelIndex,
+                        carouselController: controller.cancelCarouselController,
+                        onPageChanged: (index, _) {
+                          controller.onCancelChange(index);
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
-        bottomNavigationBar: FancyBottomNavigation(
-          tabs: [
-            TabData(iconData: Icons.home_outlined, title: "Home"),
-            TabData(iconData: Icons.live_tv_outlined, title: "Live"),
-            TabData(iconData: Icons.shopping_cart_outlined, title: "Cart"),
-            TabData(iconData: CupertinoIcons.photo, title: "Gallety"),
-            TabData(iconData: Icons.person_3_rounded, title: "Profile"),
-          ],
-          onTabChangedListener: (position) => controller.setBottomNavigationBarSelectedItem(position)
+      ),
+    );
+  }
+}
+
+class AnswerWgt extends StatelessWidget {
+  final String txt;
+  final bool isSelected;
+
+  const AnswerWgt({super.key, required this.txt, required this.isSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 35,
+      width: Get.width * 0.4,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: isSelected
+              ? ColorConstants().greenColor
+              : const Color.fromRGBO(0, 0, 0, 0.5),
         ),
+        borderRadius: BorderRadius.circular(6),
+        color: isSelected ? ColorConstants().greenColor : Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(
+            txt,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: isSelected
+                  ? ColorConstants().whiteColor
+                  : const Color.fromRGBO(0, 0, 0, 0.5),
+            ),
+          ),
+          Container(
+            width: 18,
+            height: 18,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isSelected ? ColorConstants().whiteColor : Colors.white70,
+              border: Border.all(color: const Color.fromRGBO(0, 0, 0, 0.5)),
+            ),
+            child: Icon(
+              Icons.done,
+              color: isSelected ? ColorConstants().greenColor : Colors.white,
+              size: 12,
+            ),
+          )
+        ],
       ),
     );
   }

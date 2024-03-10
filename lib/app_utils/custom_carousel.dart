@@ -39,7 +39,7 @@ class CustomCarousel extends StatelessWidget {
                 }),
           ),
           Positioned(
-            bottom: 12,
+            bottom: 6,
             left: 0,
             right: 0,
             child: Row(
@@ -48,7 +48,7 @@ class CustomCarousel extends StatelessWidget {
                 return Container(
                   width: 20,
                   height: 5,
-                  margin: const EdgeInsets.only(left: 4, bottom: 12),
+                  margin: const EdgeInsets.only(left: 4),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(
                       index == entry.key ? 1 : 0.5,

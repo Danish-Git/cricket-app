@@ -17,6 +17,26 @@ class UserProfileRepo {
     );
   }
 
+  Future<ApiResponse> updateUserProfileDetails({
+    required String number,
+    required String userName,
+    required String email,
+  }) {
+    Map<String, dynamic> body = {
+      'Mobile': number,
+      'UserName': userName,
+      'Email': email,
+    };
+    return _apiMethods.postRequest(url: updateUserProfileUrl, body: body).then(
+          (value) => ApiResponse(
+            status: value.status,
+            data: value.status ? value.data : null,
+            message: value.message,
+            statusCode: value.statusCode,
+          ),
+        );
+  }
+
   Future<ApiResponse> updateUserProfileImg({
     required String number,
     required File fileName,

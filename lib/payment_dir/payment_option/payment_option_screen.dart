@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../app_utils/app_wgts_utils.dart';
 import 'payment_option_controller.dart';
 
@@ -16,115 +15,113 @@ class PaymentOptionScreen extends StatelessWidget {
       init: PaymentOptionController(),
       builder: (controller) {
         return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 315,
-                      child: SvgPicture.asset(
-                        'assets/down_dot.svg',
-                        height: 300,
-                        fit: BoxFit.cover,
-                        semanticsLabel: 'Logo',
-                      ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 315,
+                    child: SvgPicture.asset(
+                      'assets/down_dot.svg',
+                      height: 300,
+                      fit: BoxFit.cover,
+                      semanticsLabel: 'Logo',
                     ),
-                    Positioned(
-                      top: Get.height * 0.13,
-                      left: 0,
-                      right: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const TxtWgt(label: 'UPI'),
-                          CustomRadioTile(
-                            groupValue: 1,
-                            selectedValue: controller.selectedIndex,
-                            label: 'Google Pay',
-                            imgName: 'UPI',
-                            onTap: (val) {
-                              controller.onTap(val);
-                            },
-                          ),
-                          CustomRadioTile(
-                            groupValue: 2,
-                            selectedValue: controller.selectedIndex,
-                            label: 'Phone Pay',
-                            imgName: 'UPI',
-                            onTap: (val) {
-                              controller.onTap(val);
-                            },
-                          ),
-                          CustomRadioTile(
-                            groupValue: 3,
-                            selectedValue: controller.selectedIndex,
-                            label: 'Amazon Pay',
-                            imgName: 'UPI',
-                            onTap: (val) {
-                              controller.onTap(val);
-                            },
-                          ),
-                        ],
-                      ),
+                  ),
+                  Positioned(
+                    top: Get.height * 0.13,
+                    left: 0,
+                    right: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TxtWgt(label: 'UPI'),
+                        CustomRadioTile(
+                          groupValue: 1,
+                          selectedValue: controller.selectedIndex,
+                          label: 'Google Pay',
+                          imgName: 'UPI',
+                          onTap: (val) {
+                            controller.onTap(val);
+                          },
+                        ),
+                        CustomRadioTile(
+                          groupValue: 2,
+                          selectedValue: controller.selectedIndex,
+                          label: 'Phone Pay',
+                          imgName: 'UPI',
+                          onTap: (val) {
+                            controller.onTap(val);
+                          },
+                        ),
+                        CustomRadioTile(
+                          groupValue: 3,
+                          selectedValue: controller.selectedIndex,
+                          label: 'Amazon Pay',
+                          imgName: 'UPI',
+                          onTap: (val) {
+                            controller.onTap(val);
+                          },
+                        ),
+                      ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 12, top: 6),
-                      child: CustomAppBar(
-                          label: 'Payment options', isGreen: false),
-                    ),
-                  ],
-                ),
-                CustomRadioTile(
-                  groupValue: 4,
-                  selectedValue: controller.selectedIndex,
-                  label: 'paytm',
-                  imgName: 'UPI',
-                  onTap: (val) {
-                    controller.onTap(val);
-                  },
-                ),
-                AddNewOption(label: 'Add new UPI ID', onTap: () {}),
-                const SizedBox(height: 16),
-                const TxtWgt(label: 'Credit and Debit Cards'),
-                CustomRadioTile(
-                  groupValue: 5,
-                  selectedValue: controller.selectedIndex,
-                  label: 'xxxx xxxx xxxx xx89',
-                  imgName: 'VISA',
-                  onTap: (val) {
-                    controller.onTap(val);
-                  },
-                ),
-                CustomRadioTile(
-                  groupValue: 6,
-                  selectedValue: controller.selectedIndex,
-                  label: 'xxxx xxxx xxxx xx77',
-                  imgName: 'Mas',
-                  onTap: (val) {
-                    controller.onTap(val);
-                  },
-                ),
-                AddNewOption(
-                    label: 'Add new card',
-                    onTap: () {
-                      controller.onAddCardTap();
-                    }),
-                const SizedBox(height: 16),
-                const TxtWgt(label: 'More Payment Options'),
-                CustomRadioTile(
-                  groupValue: 7,
-                  selectedValue: controller.selectedIndex,
-                  label: 'Scan and pay',
-                  imgName: 'Scan',
-                  onTap: (val) {
-                    controller.onTap(val);
-                  },
-                ),
-              ],
-            ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 12, top: 6),
+                    child:
+                        CustomAppBar(label: 'Payment options', isGreen: false),
+                  ),
+                ],
+              ),
+              CustomRadioTile(
+                groupValue: 4,
+                selectedValue: controller.selectedIndex,
+                label: 'paytm',
+                imgName: 'UPI',
+                onTap: (val) {
+                  controller.onTap(val);
+                },
+              ),
+              AddNewOption(label: 'Add new UPI ID', onTap: () {}),
+              /*     const SizedBox(height: 16),
+              const TxtWgt(label: 'Credit and Debit Cards'),
+              CustomRadioTile(
+                groupValue: 5,
+                selectedValue: controller.selectedIndex,
+                label: 'xxxx xxxx xxxx xx89',
+                imgName: 'VISA',
+                onTap: (val) {
+                  controller.onTap(val);
+                },
+              ),
+              CustomRadioTile(
+                groupValue: 6,
+                selectedValue: controller.selectedIndex,
+                label: 'xxxx xxxx xxxx xx77',
+                imgName: 'Mas',
+                onTap: (val) {
+                  controller.onTap(val);
+                },
+              ),
+              AddNewOption(
+                  label: 'Add new card',
+                  onTap: () {
+                    controller.onAddCardTap();
+                  }),
+              const SizedBox(height: 16),
+              const TxtWgt(label: 'More Payment Options'),
+              CustomRadioTile(
+                groupValue: 7,
+                selectedValue: controller.selectedIndex,
+                label: 'Scan and pay',
+                imgName: 'Scan',
+                onTap: (val) {
+                  controller.onTap(val);
+                },
+              ),*/
+            ],
           ),
         );
       },

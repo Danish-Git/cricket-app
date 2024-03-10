@@ -4,6 +4,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../app_utils/color_constants.dart';
 import '../app_utils/custom_button.dart';
 import '../app_utils/image_utils.dart';
+import '../live_tv_dir/full_screen_youtube.dart';
 import '../routing_dir/app_screen_const.dart';
 import 'login_controller.dart';
 
@@ -107,21 +108,22 @@ class OtpScreen extends StatelessWidget {
                   hgt: 50,
                   color: ColorConstants().greenColor,
                   onTap: () {
-                    Get.toNamed(AppScreenConst.home);
+                    Get.toNamed(AppScreenConst.bottomNav);
                   },
                 ),
                 Center(
                   child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Resend Code',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: ColorConstants().greenColor,
-                        ),
-                      )),
+                    onPressed: () {},
+                    child: Text(
+                      'Resend Code',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: ColorConstants().greenColor,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

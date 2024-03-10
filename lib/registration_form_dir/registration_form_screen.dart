@@ -5,6 +5,7 @@ import '../app_utils/app_wgts_utils.dart';
 import '../app_utils/custom_button.dart';
 import '../app_utils/image_utils.dart';
 import '../app_utils/color_constants.dart';
+import '../routing_dir/app_screen_const.dart';
 import 'registration_form_controller.dart';
 
 class RegistrationFormScreen extends StatelessWidget {
@@ -137,7 +138,8 @@ class RegistrationFormScreen extends StatelessWidget {
                       hgt: 50,
                       color: ColorConstants().greenColor,
                       onTap: () {
-                        controller.registerValidation();
+                        // controller.registerValidation();
+                        Get.toNamed(AppScreenConst.paymentOption);
                       },
                     ),
                   ],

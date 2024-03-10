@@ -177,7 +177,8 @@ class ApiMethods {
             if (value.statusCode == 200) {
               dynamic data = jsonDecode(value.data);
               if (data['status'] == true) {
-                return ApiResponse(status: true, data: data);
+                return ApiResponse(
+                    status: true, data: data, message: data['message']);
               } else {
                 return ApiResponse(
                   status: false,
@@ -315,7 +316,6 @@ class ApiMethods {
     required String email,
     required String address,
     required String userType,
-
   }) async {
     if (await checkInternetConnectivity()) {
       String fileName = file.path.split('/').last;
@@ -340,27 +340,27 @@ class ApiMethods {
 
       return dio
           .postUri(
-        Uri.parse(url),
-        data: formData,
-        cancelToken: DioSingleton()._cancelToken,
-      )
+            Uri.parse(url),
+            data: formData,
+            cancelToken: DioSingleton()._cancelToken,
+          )
           .then((value) {
-        if (value.statusCode == 200) {
-          dynamic data = jsonDecode(value.data);
-          if (data['status'] == true) {
-            return ApiResponse(status: true, message: data['message']);
-          } else {
-            return ApiResponse(status: false, message: data['message']);
-          }
-        } else {
-          return ApiResponse(
-            status: false,
-            message: (json.decode(value.data).toString()),
-            statusCode: json.decode(value.data)['statusDescription']
-            ['statusCode'],
-          );
-        }
-      })
+            if (value.statusCode == 200) {
+              dynamic data = jsonDecode(value.data);
+              if (data['status'] == true) {
+                return ApiResponse(status: true, message: data['message']);
+              } else {
+                return ApiResponse(status: false, message: data['message']);
+              }
+            } else {
+              return ApiResponse(
+                status: false,
+                message: (json.decode(value.data).toString()),
+                statusCode: json.decode(value.data)['statusDescription']
+                    ['statusCode'],
+              );
+            }
+          })
           .onError((error, stackTrace) => onCatchError(error))
           .catchError((onError) => onCatchError(onError))
           .timeout(timeOut, onTimeout: () => onTimeOut);
