@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                                         );
                                       },
                                       icon: const Icon(
-                                        Icons.notifications_none,
+                                        Icons.notifications_outlined,
                                         size: 32,
                                       ),
                                     )
