@@ -1,4 +1,3 @@
-import 'package:cricket/live_tv_dir/full_screen_youtube.dart';
 import 'package:cricket/live_tv_dir/wgt_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -204,132 +203,9 @@ class LiveTvScreen extends StatelessWidget {
 
                                             ///////  match score
 
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                ////////// left side
+                                            const MatchScoreWgt(),
 
-                                                SizedBox(
-                                                  width: Get.width * 0.38,
-                                                  child: const Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            '233  / ',
-                                                            style: TextStyle(
-                                                              fontSize: 24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            '4',
-                                                            style: TextStyle(
-                                                              fontSize: 24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        '36.5 OVERS',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                      CustomContainer(),
-                                                    ],
-                                                  ),
-                                                ),
-///////////
-                                                Container(width: 50),
-///////////
-                                                SizedBox(
-                                                  width: Get.width * 0.38,
-                                                  child: const Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            '233  / ',
-                                                            style: TextStyle(
-                                                              fontSize: 24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            '4',
-                                                            style: TextStyle(
-                                                              fontSize: 24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        '36.5 OVERS',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                      CustomContainer(),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-
-                                            /////////////////////
-                                            const Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 20, bottom: 16),
-                                              child:
-                                                  Divider(color: Colors.grey),
-                                            ),
-                                            const Text(
-                                              'BAN NEEDS 150 RUNS IN 15.1 OVERS',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
+                                            ///////////////////
                                             Container(
                                               height: 100,
                                               width: double.maxFinite,
@@ -736,12 +612,442 @@ class LiveTvScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      const Center(
-                                        child: Icon(Icons.account_circle),
+
+                                      ////////// SCOREBOARD
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(height: 24),
+                                            const MatchScoreWgt(),
+                                            Container(
+                                              height: 50,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              margin: const EdgeInsets.only(
+                                                  top: 24),
+                                              alignment: Alignment.center,
+                                              color: Colors.grey.shade300,
+                                              child: const Row(
+                                                children: [
+                                                  Text(
+                                                    'Batsman',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  CustomBox(
+                                                      label: 'R',
+                                                      isLabel: true),
+                                                  CustomBox(
+                                                      label: 'B',
+                                                      isLabel: true),
+                                                  CustomBox(
+                                                      label: '4s',
+                                                      isLabel: true),
+                                                  CustomBox(
+                                                      label: '6s',
+                                                      isLabel: true),
+                                                  CustomBox(
+                                                      label: 'SR',
+                                                      isLabel: true),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 60,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    width: 1.5,
+                                                    color: Colors.grey.shade300,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      const CircleAvatar(
+                                                        radius: 16,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                helmet),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.35,
+                                                        child: const Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              '    Batsmen Name',
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(top: 4),
+                                                              child: Text(
+                                                                '    c Kohli b Bumrah',
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  const CustomBox(
+                                                      label: '122',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '111',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '23',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '23',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                    label: '444.4',
+                                                    isLabel: false,
+                                                    isLast: true,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 60,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    width: 1.5,
+                                                    color: Colors.grey.shade300,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      const CircleAvatar(
+                                                        radius: 16,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                helmet),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.35,
+                                                        child: const Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              '    Batsmen Name',
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(top: 4),
+                                                              child: Text(
+                                                                '    c Kohli b Bumrah',
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  const CustomBox(
+                                                      label: '122',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '111',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '23',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '23',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                    label: '444.4',
+                                                    isLabel: false,
+                                                    isLast: true,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 60,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    width: 1.5,
+                                                    color: Colors.grey.shade300,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      const CircleAvatar(
+                                                        radius: 16,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                helmet),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.35,
+                                                        child: const Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              '    Batsmen Name',
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(top: 4),
+                                                              child: Text(
+                                                                '    c Kohli b Bumrah',
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  const CustomBox(
+                                                      label: '122',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '111',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '23',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                      label: '23',
+                                                      isLabel: false),
+                                                  const CustomBox(
+                                                    label: '444.4',
+                                                    isLabel: false,
+                                                    isLast: true,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+                                            //////// EXTRA SCORE BLOCK
+
+                                            Container(
+                                              height: 70,
+                                              color: Colors.white,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16),
+                                              child: const Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'EXTRAS',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        '14',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Text(
+                                                        '(B 8, LB 1, NB 2, W6)',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+                                            const Divider(),
+
+                                            Container(
+                                              height: 70,
+                                              color: Colors.white,
+                                              padding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16),
+                                              child: const Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'TOTAL',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                      FontWeight.w700,
+                                                      color: Colors.green,
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .center,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        '233/4',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                          FontWeight.w600,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Text(
+                                                        '36.5 OV (RR 7.2)',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                          FontWeight.w600,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+
+
+                                          ],
+                                        ),
                                       ),
-                                      const Center(
-                                        child: Icon(Icons.alarm),
-                                      )
+
+                                      ////////// commentary
+                                      const Center(child: Icon(Icons.alarm))
                                     ],
                                   ),
                                 ),

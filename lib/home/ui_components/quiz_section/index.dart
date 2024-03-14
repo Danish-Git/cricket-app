@@ -1,6 +1,5 @@
 import 'package:cricket/home/home_controller.dart';
 import 'package:flutter/material.dart';
-
 import '../../../app_utils/color_constants.dart';
 import 'answer.dart';
 
@@ -55,30 +54,54 @@ class QuizSection extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AnswerWgt(
-                      txt: question.Option1,
-                      isSelected: controller.selectedAns == 1,
-                      onTapOption: () => controller.setQuizAnswer(1, question),
+                    GestureDetector(
+                      onTap: () {
+                        controller.onSelectQuizAns(question.Option1);
+                      },
+                      child: AnswerWgt(
+                        txt: question.Option1,
+                        correctAns: controller.correctAns,
+                        wrongAns: controller.wrongAns,
+                        selectedVal: controller.selectedAns,
+                      ),
                     ),
-                    AnswerWgt(
-                      txt: question.Option2,
-                      isSelected: controller.selectedAns == 2,
-                      onTapOption: () => controller.setQuizAnswer(2, question),
+                    GestureDetector(
+                      onTap: () {
+                        controller.onSelectQuizAns(question.Option2);
+                      },
+                      child: AnswerWgt(
+                        txt: question.Option2,
+                        correctAns: controller.correctAns,
+                        wrongAns: controller.wrongAns,
+                        selectedVal: controller.selectedAns,
+                      ),
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AnswerWgt(
-                      txt: question.Option3,
-                      isSelected: controller.selectedAns == 3,
-                      onTapOption: () => controller.setQuizAnswer(3, question),
+                    GestureDetector(
+                      onTap: () {
+                        controller.onSelectQuizAns(question.Option3);
+                      },
+                      child: AnswerWgt(
+                        txt: question.Option3,
+                        correctAns: controller.correctAns,
+                        wrongAns: controller.wrongAns,
+                        selectedVal: controller.selectedAns,
+                      ),
                     ),
-                    AnswerWgt(
-                      txt: question.Option4,
-                      isSelected: controller.selectedAns == 4,
-                      onTapOption: () => controller.setQuizAnswer(4, question),
+                    GestureDetector(
+                      onTap: () {
+                        controller.onSelectQuizAns(question.Option4);
+                      },
+                      child: AnswerWgt(
+                        txt: question.Option4,
+                        correctAns: controller.correctAns,
+                        wrongAns: controller.wrongAns,
+                        selectedVal: controller.selectedAns,
+                      ),
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../app_utils/app_wgts_utils.dart';
 import '../app_utils/custom_button.dart';
@@ -58,17 +59,100 @@ class RegistrationFormScreen extends StatelessWidget {
                       label: 'Full Name',
                       textEditingController: controller.nameController,
                     ),
-                    LabelTxtController(
-                      label: 'Phone Number',
-                      textEditingController: controller.phoneController,
+                    SizedBox(
+                      height: 60,
+                      child: TextField(
+                        controller: controller.phoneController,
+                        readOnly: false,
+                        maxLength: 13,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        style: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.only(top: 4),
+                          counterText: '',
+                          label: Text('Phone Number'),
+                          labelStyle: TextStyle(
+                            color: Color.fromRGBO(150, 150, 150, 1),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(150, 150, 150, 1),
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(150, 150, 150, 1),
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(150, 150, 150, 1),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
+
+                    // LabelTxtController(
+                    //   label: 'Phone Number',
+                    //   textEditingController: controller.phoneController,
+                    // ),
                     LabelTxtController(
                       label: 'E-mail',
                       textEditingController: controller.emailController,
                     ),
-                    LabelTxtController(
-                      label: 'Date of Birth',
-                      textEditingController: controller.dobController,
+                    SizedBox(
+                      height: 60,
+                      child: TextField(
+                        controller: controller.dobController,
+                        readOnly: true,
+                        maxLength: 40,
+                        style: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(top: 4),
+                          counterText: '',
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              controller.selectDate(context);
+                            },
+                            child: const Icon(Icons.calendar_month),
+                          ),
+                          label: const Text('Date of Birth'),
+                          labelStyle: const TextStyle(
+                            color: Color.fromRGBO(150, 150, 150, 1),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(150, 150, 150, 1),
+                            ),
+                          ),
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(150, 150, 150, 1),
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(150, 150, 150, 1),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     LabelTxtController(
                       label: 'Permanent Address',
@@ -105,7 +189,6 @@ class RegistrationFormScreen extends StatelessWidget {
                               ),
                       ),
                     ),
-                    // const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -138,8 +221,8 @@ class RegistrationFormScreen extends StatelessWidget {
                       hgt: 50,
                       color: ColorConstants().greenColor,
                       onTap: () {
-                        // controller.registerValidation();
-                        Get.toNamed(AppScreenConst.paymentOption);
+                        controller.registerValidation();
+                        // Get.toNamed(AppScreenConst.paymentOption);
                       },
                     ),
                   ],

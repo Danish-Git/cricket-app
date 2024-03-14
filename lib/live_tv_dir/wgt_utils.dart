@@ -1,6 +1,117 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../home/match_detail/table_wgt.dart';
+
+class MatchScoreWgt extends StatelessWidget {
+  const MatchScoreWgt({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ////////// left side
+            SizedBox(
+              width: Get.width * 0.38,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '233  / ',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        '4',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '36.5 OVERS',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  CustomContainer(),
+                ],
+              ),
+            ),
+            ///////////
+            const SizedBox(width: 50),
+            /////////// right side
+            SizedBox(
+              width: Get.width * 0.38,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '233  / ',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        '4',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '36.5 OVERS',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  CustomContainer(),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        /////////////////////
+        const Padding(
+          padding: EdgeInsets.only(top: 20, bottom: 16),
+          child: Divider(color: Colors.grey),
+        ),
+        const Text(
+          'BAN NEEDS 150 RUNS IN 15.1 OVERS',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.green,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class CustomContainer extends StatelessWidget {
   const CustomContainer({super.key});
@@ -60,10 +171,10 @@ class CustomBallBox extends StatelessWidget {
         color: ballScore == BallScore.fourRun
             ? Colors.blue
             : ballScore == BallScore.wicket
-            ? Colors.red
-            : ballScore == BallScore.sixRun
-            ? Colors.green
-            : Colors.grey,
+                ? Colors.red
+                : ballScore == BallScore.sixRun
+                    ? Colors.green
+                    : Colors.grey,
       ),
       child: Text(
         label,

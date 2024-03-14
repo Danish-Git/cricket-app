@@ -71,6 +71,19 @@ class RegistrationFormController extends GetxController {
     }
   }
 
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime(1990),
+        firstDate: DateTime(1989, 8),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      dobController = TextEditingController(
+          text: '${picked.day}/${picked.month}/${picked.year}');
+      update();
+    }
+  }
+
   void registerValidation() {
     if (nameController.text.trim().isEmpty) {
       showTopSnackBarError('Please enter your full name');
@@ -82,13 +95,13 @@ class RegistrationFormController extends GetxController {
       showTopSnackBarError('Please enter your email');
       return;
     } else if (dobController.text.trim().isEmpty) {
-      showTopSnackBarError('Please enter your date of birth');
+      showTopSnackBarError('Please select your date of birth');
       return;
     } else if (addressController.text.trim().isEmpty) {
       showTopSnackBarError('Please enter your permanent address');
       return;
     } else if (imgName.isEmpty) {
-      showTopSnackBarError('Please your aadhar card photo');
+      showTopSnackBarError('Please upload your aadhar card photo');
       return;
     } else if (!isCheckBoxSelected) {
       showTopSnackBarError('Please select save option');

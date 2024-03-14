@@ -3,16 +3,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'routing_dir/app_screen_const.dart';
 import 'routing_dir/screen_route.dart';
-
-GetStorage storagePrefBox = GetStorage();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await GetStorage.init();
 
   await FirebaseMessaging.instance.requestPermission(
     alert: true,

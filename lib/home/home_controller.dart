@@ -51,7 +51,17 @@ class HomeController extends GetxController {
 
   List<QuizQuestionList> questionList = [];
 
-  int selectedAns = 9;
+  String selectedAns = '';
+  String correctAns = '';
+  String wrongAns = '';
+
+  void onSelectQuizAns(String ans) {
+    if (selectedAns.isEmpty) {
+      correctAns = questionList[0].CorrectOption;
+      selectedAns = ans;
+      update();
+    }
+  }
 
   void quizQuestion() {
     _homeRepo.getQuizQuestionHome().then((value) {
@@ -234,15 +244,15 @@ class HomeController extends GetxController {
 
   //////////
 
-  void setQuizAnswer(int selectedAnswer, QuizQuestionList question) {
-    selectedAns = selectedAnswer;
-    update();
-    if (correctAnswerIndex(question) == selectedAns) {
-      //  correct answer
-    } else {
-      //  wrong answer
-    }
-  }
+  // void setQuizAnswer(int selectedAnswer, QuizQuestionList question) {
+  //   selectedAns = selectedAnswer;
+  //   update();
+  //   if (correctAnswerIndex(question) == selectedAns) {
+  //     //  correct answer
+  //   } else {
+  //     //  wrong answer
+  //   }
+  // }
 
   int correctAnswerIndex(QuizQuestionList question) {
     if (question.CorrectOption == question.Option1) {

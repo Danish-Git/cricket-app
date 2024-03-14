@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import '../../app_utils/table_bg_wgt.dart';
 import '../response/top_wicket_response.dart';
 
-const String helmet =
-    'https://s3-alpha-sig.figma.com/img/325a/e8ef/858b15c5be1a72c20e47405494284738?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OH7RmW~NoM1-tvPN98Y2Hiv7oyf33K2VRbDahXP6WK8fOQS3UeVtwb4zfSzRzouPz5S4MMnNDyIH9dD9xEUKZhgYoe32-HiNuNSwL8hiLtSD3MJAQzIkKj7ZogZ~3UZTTgHxoFnCLxwacLVLPwdcWaYO30pI66bxP6jIEr3oX~0Bes1nC60pOldisBaehAgpjQ2TPIEj7Qvvf-LhY3IMEQmLfuDl1NJsaXN2cwHL4uacRwFCTp3pRXUmUUmudKzeisjduVi7MCTwlF-8YyCc2BYuDXGm-iUeQGXkpXgc8XGMSku3467Xfh88vZazRWmC~xnxBpV0wK3vFA-2WtBvmA__';
-
+const String helmet = 'http://via.placeholder.com/350x150';
+// 'https://s3-alpha-sig.figma.com/img/325a/e8ef/858b15c5be1a72c20e47405494284738?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OH7RmW~NoM1-tvPN98Y2Hiv7oyf33K2VRbDahXP6WK8fOQS3UeVtwb4zfSzRzouPz5S4MMnNDyIH9dD9xEUKZhgYoe32-HiNuNSwL8hiLtSD3MJAQzIkKj7ZogZ~3UZTTgHxoFnCLxwacLVLPwdcWaYO30pI66bxP6jIEr3oX~0Bes1nC60pOldisBaehAgpjQ2TPIEj7Qvvf-LhY3IMEQmLfuDl1NJsaXN2cwHL4uacRwFCTp3pRXUmUUmudKzeisjduVi7MCTwlF-8YyCc2BYuDXGm-iUeQGXkpXgc8XGMSku3467Xfh88vZazRWmC~xnxBpV0wK3vFA-2WtBvmA__';
 
 TextStyle blackTxtStyle = const TextStyle(
   fontSize: 10,
