@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 12, top: 12, bottom: 8),
                   child: Text(
-                    'Login to App_name',
+                    'Login to Cricket Club',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -91,21 +91,27 @@ class LoginScreen extends StatelessWidget {
                         size: 24,
                         color: ColorConstants().greenColor,
                       ),
-                      SizedBox(
-                        width: Get.width * 0.6,
-                        child: Center(
-                          child: TextField(
-                            maxLength: 13,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: '+91 1234567890',
-                                counterText: '',
-                                hintStyle: TextStyle(
-                                  color: Color.fromRGBO(78, 78, 78, 1),
-                                  fontSize: 14.4,
-                                  fontWeight: FontWeight.w400,
-                                )),
-                            cursorColor: ColorConstants().greenColor,
+                      Form(
+                        key: controller.formKey,
+                        child: SizedBox(
+                          width: Get.width * 0.6,
+                          child: Center(
+                            child: TextFormField(
+                              maxLength: 10,
+                              onSaved: controller.getPhoneNo,
+                              validator: controller.validatePhoneNo,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: '9876543210',
+                                  counterText: '',
+                                  hintStyle: TextStyle(
+                                    color: Color.fromRGBO(78, 78, 78, 1),
+                                    fontSize: 14.4,
+                                    fontWeight: FontWeight.w400,
+
+                                  )),
+                              cursorColor: ColorConstants().greenColor,
+                            ),
                           ),
                         ),
                       ),
@@ -118,9 +124,7 @@ class LoginScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 28, left: 22, right: 22),
                   hgt: 50,
                   color: ColorConstants().greenColor,
-                  onTap: () {
-                    Get.toNamed(AppScreenConst.otpScreen);
-                  },
+                  onTap: () => controller.validateAndSendOTP()
                 ),
               ],
             ),

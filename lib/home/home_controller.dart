@@ -13,6 +13,9 @@ class HomeController extends GetxController {
   final HomeRepo _homeRepo = HomeRepo();
   bool isLoading = true;
 
+  /// #important
+  /// String phoneNumber; // read from shared preferences
+
   @override
   void onInit() {
     super.onInit();

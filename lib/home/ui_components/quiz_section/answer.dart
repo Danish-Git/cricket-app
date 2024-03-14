@@ -45,7 +45,7 @@ class AnswerWgt extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
                   color: isSelected
-                      ? ColorConstants().whiteColor
+                      ? ColorConstants.whiteColor
                       : const Color.fromRGBO(0, 0, 0, 0.5),
                 ),
               ),
@@ -55,7 +55,7 @@ class AnswerWgt extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isSelected ? ColorConstants().whiteColor : Colors.white70,
+                  color: isSelected ? ColorConstants.whiteColor : Colors.white70,
                   border: Border.all(color: const Color.fromRGBO(0, 0, 0, 0.5)),
                 ),
                 child: Icon(

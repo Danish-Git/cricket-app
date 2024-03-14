@@ -2,14 +2,70 @@ import 'package:cricket/app_utils/custom_button.dart';
 import 'package:cricket/routing_dir/app_screen_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:upi_india/upi_india.dart';
 import '../../app_utils/color_constants.dart';
+import '../../app_utils/payment_constants.dart';
 
 class PaymentOptionController extends GetxController {
-  int selectedIndex = 1;
+  int selectedIndex = 0;
+  late UpiApp selectedUpiApp;
 
-  void onTap(int val) {
-    selectedIndex = val;
+  UpiIndia upiIndia = UpiIndia();
+  List<UpiApp> upiApps = [];
+
+  bool isLoading = false;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchUPIApps();
+  }
+
+  Future<void> fetchUPIApps() async {
+    try {
+      toggleIsLoading();
+      upiApps = await upiIndia.getAllUpiApps();
+      upiApps.sort((a, b) => a.name.compareTo(b.name));
+      selectedUpiApp = upiApps[selectedIndex];
+      toggleIsLoading();
+    } catch (e) {
+      /// error;
+    }
+  }
+
+  void onUPIAppSelection(UpiApp upiApp, int value) {
+    selectedIndex = value;
+    selectedUpiApp = upiApp;
     update();
+  }
+
+  Future<void> proceedToPay() async {
+    try {
+      UpiResponse? response = await upiIndia.startTransaction(
+        app: selectedUpiApp,
+        receiverUpiId: PaymentConstants.receivingUPI,
+        receiverName: PaymentConstants.receiverName,
+        transactionRefId: PaymentConstants.transactionRef,
+        transactionNote: PaymentConstants.transactionNote,
+        amount: PaymentConstants.playerRegistrationFee,
+      );
+      switch (response.status) {
+        case 'UpiPaymentStatus.SUBMITTED':
+          break;
+        case 'UpiPaymentStatus.FAILURE':
+          Get.back();
+          break;
+        case 'UpiPaymentStatus.SUCCESS':
+        /// #Important
+        ///  registerPlayer(response);
+          onContinueTap();
+          break;
+        default:
+          break;
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   void onContinueTap() {
@@ -162,6 +218,11 @@ class PaymentOptionController extends GetxController {
         ),
       ),
     );
+  }
+
+  void toggleIsLoading() {
+    isLoading = !isLoading;
+    update();
   }
 }
 
