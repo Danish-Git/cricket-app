@@ -1,4 +1,4 @@
-package com.example.cricket
+package com.cricket.club
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 import '../api_methods/api_constants.dart';
 import '../api_methods/api_methods.dart';
+import '../app_utils/app_static.dart';
 
 class RegisterRepo {
   final ApiMethods _apiMethods = ApiMethods();
@@ -19,7 +20,7 @@ class RegisterRepo {
   }) {
     return _apiMethods
         .fileUploadRegisterApi(
-          url: saveUserRegistrationDetailUrl,
+          url: saveUserRegistrationDetailUrl+ AppStatic.userId,
           mNumber: mNumber,
           address: address,
           dob: dob,
@@ -43,7 +44,7 @@ class RegisterRepo {
 
   Future<ApiResponse> userRegistrationDetailApi({required String mNumber}) {
     return _apiMethods.postRequest(
-        url: getUserRegistrationDetailUrl, body: {'Mobile': mNumber}).then(
+        url: getUserRegistrationDetailUrl+ AppStatic.userId, body: {'Mobile': mNumber}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,

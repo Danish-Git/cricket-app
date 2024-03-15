@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:cricket/app_utils/app_static.dart';
 import 'package:cricket/home/response/quiz_question_response.dart';
 import 'package:cricket/routing_dir/app_screen_const.dart';
 import 'package:cricket/user_profile/UserProfileRepo.dart';
@@ -13,6 +14,9 @@ class HomeController extends GetxController {
   final HomeRepo _homeRepo = HomeRepo();
   bool isLoading = true;
 
+  /// #important
+  /// String phoneNumber; // read from shared preferences
+
   @override
   void onInit() {
     super.onInit();
@@ -24,7 +28,7 @@ class HomeController extends GetxController {
   String userImg = '';
 
   void getUserDetail() {
-    UserProfileRepo().getUserProfile(number: '0123456789').then((value) {
+    UserProfileRepo().getUserProfile().then((value) {
       if (value.status) {
         UserProfileResponse response = UserProfileResponse.fromJson(value.data);
         userName = response.data[0].UserName;
@@ -76,7 +80,7 @@ class HomeController extends GetxController {
   void saveQuizAnswer(String id, String answer) {
     _homeRepo
         .saveQuizQuestionAnswerHome(
-            mobile: '7087359973', quizId: id, answer: answer)
+            mobile: AppStatic.userNumber, quizId: id, answer: answer)
         .then((value) {
       if (value.status) {
         print(value.message.toString());

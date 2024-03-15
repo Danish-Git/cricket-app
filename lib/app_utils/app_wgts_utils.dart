@@ -4,14 +4,12 @@ import 'package:get/get.dart';
 import 'color_constants.dart';
 
 class BackBtnIcon extends StatelessWidget {
-  const BackBtnIcon({super.key});
-
+  const BackBtnIcon({super.key, this.onPressed});
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        Get.back();
-      },
+      onPressed: onPressed ?? () => Get.back(),
       icon: Icon(
         Icons.arrow_back_ios,
         size: 26,

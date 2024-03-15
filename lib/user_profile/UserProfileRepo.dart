@@ -1,13 +1,15 @@
 import 'dart:io';
 import '../api_methods/api_constants.dart';
 import '../api_methods/api_methods.dart';
+import '../app_utils/app_static.dart';
 
 class UserProfileRepo {
   final ApiMethods _apiMethods = ApiMethods();
 
-  Future<ApiResponse> getUserProfile({required String number}) {
-    return _apiMethods
-        .postRequest(url: getUserProfileUrl, body: {'Mobile': number}).then(
+  Future<ApiResponse> getUserProfile() {
+    return _apiMethods.postRequest(
+        url: getUserProfileUrl + AppStatic.userId,
+        body: {'Mobile': AppStatic.userNumber}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -18,12 +20,11 @@ class UserProfileRepo {
   }
 
   Future<ApiResponse> updateUserProfileDetails({
-    required String number,
     required String userName,
     required String email,
   }) {
     Map<String, dynamic> body = {
-      'Mobile': number,
+      'Mobile': AppStatic.userNumber,
       'UserName': userName,
       'Email': email,
     };
@@ -37,14 +38,11 @@ class UserProfileRepo {
         );
   }
 
-  Future<ApiResponse> updateUserProfileImg({
-    required String number,
-    required File fileName,
-  }) {
+  Future<ApiResponse> updateUserProfileImg({required File fileName}) {
     return _apiMethods
         .fileUploadApi(
           url: updateUserProfileImageUrl,
-          number: number,
+          number: AppStatic.userNumber,
           paramName: 'ProfilePicture',
           file: fileName,
         )

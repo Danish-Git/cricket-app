@@ -19,7 +19,7 @@ class LiveTvScreenController extends GetxController {
   String userImg = '';
 
   void getUserDetail() {
-    UserProfileRepo().getUserProfile(number: '0123456789').then((value) {
+    UserProfileRepo().getUserProfile().then((value) {
       if (value.status) {
         UserProfileResponse response = UserProfileResponse.fromJson(value.data);
         userName = response.data[0].UserName;

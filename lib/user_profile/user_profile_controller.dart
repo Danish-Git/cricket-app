@@ -27,7 +27,7 @@ class UserProfileController extends GetxController {
   List<UserProfileData> userProfile = [];
 
   void getUserDetail() {
-    _userProfileRepo.getUserProfile(number: '0123456789').then((value) {
+    _userProfileRepo.getUserProfile().then((value) {
       if (value.status) {
         UserProfileResponse response = UserProfileResponse.fromJson(value.data);
         userProfile.addAll(response.data);
@@ -94,7 +94,7 @@ class UserProfileController extends GetxController {
   void updateUserProfile() {
     showLoaderDialog();
     _userProfileRepo
-        .updateUserProfileImg(number: '0123456789', fileName: File(imgPath))
+        .updateUserProfileImg(fileName: File(imgPath))
         .then((value) {
       Get.back();
       if (value.status) {
@@ -113,7 +113,6 @@ class UserProfileController extends GetxController {
     showLoaderDialog();
     _userProfileRepo
         .updateUserProfileDetails(
-      number: '0123456789',
       email: emailController.text.trim(),
       userName: nameController.text.trim(),
     )

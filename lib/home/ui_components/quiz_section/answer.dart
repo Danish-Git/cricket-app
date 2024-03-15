@@ -32,7 +32,6 @@ class AnswerWgt extends StatelessWidget {
                     ? const Color.fromRGBO(250, 57, 57, 1)
                     : const Color.fromRGBO(0, 0, 0, 0.5),
           ),
-          borderRadius: BorderRadius.circular(6),
           color: correctAns == txt ? ColorConstants().greenColor : Colors.white,
         ),
         padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),

@@ -1,7 +1,12 @@
+import 'package:cricket/app_utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:upi_india/upi_app.dart';
 import '../../app_utils/app_wgts_utils.dart';
+import '../../app_utils/color_constants.dart';
+import '../../app_utils/custom_button.dart';
+import '../../app_utils/scaffold.dart';
 import 'payment_option_controller.dart';
 
 class PaymentOptionScreen extends StatelessWidget {
@@ -9,123 +14,52 @@ class PaymentOptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: GetBuilder<PaymentOptionController>(
-      assignId: true,
+    return GetBuilder<PaymentOptionController>(
+      global: false,
       init: PaymentOptionController(),
       builder: (controller) {
-        return Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 315,
-                    child: SvgPicture.asset(
-                      'assets/down_dot.svg',
-                      height: 300,
-                      fit: BoxFit.cover,
-                      semanticsLabel: 'Logo',
-                    ),
+        return CustomScaffold(
+          backgroundImage: SvgPicture.asset(
+            'assets/down_dot.svg',
+            fit: BoxFit.fill,
+          ),
+          titleWidget: Text(
+            'Payment options',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: ColorConstants().blackColor,
+            ),
+          ),
+          centerTitle: true,
+          leadingWidget: BackBtnIcon(onPressed: () => Get.back()),
+          body: controller.isLoading ? Center(child: Helper.showLoader())
+            : controller.upiApps.isEmpty ? const TxtWgt(label: 'No Payment option found')
+            : SingleChildScrollView(
+              child: Column(
+              children: [
+                for (int i = 0; i < controller.upiApps.length; i++)
+                  CustomRadioTile(
+                    groupValue: i,
+                    selectedValue: controller.selectedIndex,
+                    upiApp: controller.upiApps[i],
+                    imgName: 'UPI',
+                    onTap: controller.onUPIAppSelection,
                   ),
-                  Positioned(
-                    top: Get.height * 0.13,
-                    left: 0,
-                    right: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TxtWgt(label: 'UPI'),
-                        CustomRadioTile(
-                          groupValue: 1,
-                          selectedValue: controller.selectedIndex,
-                          label: 'Google Pay',
-                          imgName: 'UPI',
-                          onTap: (val) {
-                            controller.onTap(val);
-                          },
-                        ),
-                        CustomRadioTile(
-                          groupValue: 2,
-                          selectedValue: controller.selectedIndex,
-                          label: 'Phone Pay',
-                          imgName: 'UPI',
-                          onTap: (val) {
-                            controller.onTap(val);
-                          },
-                        ),
-                        CustomRadioTile(
-                          groupValue: 3,
-                          selectedValue: controller.selectedIndex,
-                          label: 'Amazon Pay',
-                          imgName: 'UPI',
-                          onTap: (val) {
-                            controller.onTap(val);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 12, top: 6),
-                    child:
-                        CustomAppBar(label: 'Payment options', isGreen: false),
-                  ),
-                ],
-              ),
-              CustomRadioTile(
-                groupValue: 4,
-                selectedValue: controller.selectedIndex,
-                label: 'paytm',
-                imgName: 'UPI',
-                onTap: (val) {
-                  controller.onTap(val);
-                },
-              ),
-              AddNewOption(label: 'Add new UPI ID', onTap: () {}),
-              /*     const SizedBox(height: 16),
-              const TxtWgt(label: 'Credit and Debit Cards'),
-              CustomRadioTile(
-                groupValue: 5,
-                selectedValue: controller.selectedIndex,
-                label: 'xxxx xxxx xxxx xx89',
-                imgName: 'VISA',
-                onTap: (val) {
-                  controller.onTap(val);
-                },
-              ),
-              CustomRadioTile(
-                groupValue: 6,
-                selectedValue: controller.selectedIndex,
-                label: 'xxxx xxxx xxxx xx77',
-                imgName: 'Mas',
-                onTap: (val) {
-                  controller.onTap(val);
-                },
-              ),
-              AddNewOption(
-                  label: 'Add new card',
-                  onTap: () {
-                    controller.onAddCardTap();
-                  }),
-              const SizedBox(height: 16),
-              const TxtWgt(label: 'More Payment Options'),
-              CustomRadioTile(
-                groupValue: 7,
-                selectedValue: controller.selectedIndex,
-                label: 'Scan and pay',
-                imgName: 'Scan',
-                onTap: (val) {
-                  controller.onTap(val);
-                },
-              ),*/
-            ],
+              ],
+          ),
+            ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: CustomButton(
+            label: 'Continue',
+            wth: double.infinity,
+            hgt: 50,
+            color: ColorConstants().greenColor,
+            onTap: controller.proceedToPay,
           ),
         );
       },
-    ));
+    );
   }
 }
 
@@ -136,8 +70,7 @@ class TxtWgt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20),
+    return Center(
       child: Text(
         label,
         style: const TextStyle(
@@ -153,15 +86,15 @@ class TxtWgt extends StatelessWidget {
 class CustomRadioTile extends StatelessWidget {
   final int groupValue;
   final int selectedValue;
-  final String label;
+  final UpiApp upiApp;
   final String imgName;
-  final Function(int value) onTap;
+  final Function(UpiApp upiApp, int value) onTap;
 
   const CustomRadioTile({
     super.key,
     required this.groupValue,
     required this.selectedValue,
-    required this.label,
+    required this.upiApp,
     required this.imgName,
     required this.onTap,
   });
@@ -189,27 +122,11 @@ class CustomRadioTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            height: 24,
-            width: 45,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 2,
-                color: const Color.fromRGBO(128, 128, 128, 1),
-              ),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              imgName,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
-                color: Colors.black,
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Image.memory(upiApp.icon),
           ),
-          Text('  $label'),
+          Text('  ${upiApp.name}'),
           const Spacer(),
           Radio(
             value: groupValue,
@@ -217,7 +134,7 @@ class CustomRadioTile extends StatelessWidget {
             groupValue: selectedValue,
             activeColor: Colors.green,
             onChanged: (value) {
-              onTap(value!);
+              onTap(upiApp, value!);
             },
           ),
         ],

@@ -14,25 +14,25 @@ const saveQuizAnswerUrl = '${_baseUrl}Quiz?Ans=null';
 
 ////
 
-const getALlTournamentsUrl = '${_baseUrl}Tournaments?GET=27';
-const getALlMatchesOfTournamentsUrl = '${_baseUrl}Match?GET=27';
-const pointsTableOfTournamentsUrl = '${_baseUrl}PointsTable?GET=27';
-const topRunOfTournamentsUrl = '${_baseUrl}TopRun?GET=27';
-const wicketsOfTournamentsUrl = '${_baseUrl}Wickets?GET=27';
-const winnerOfTournamentsUrl = '${_baseUrl}Winner?GET=27';
-const playingTeamsOfTournamentsUrl = '${_baseUrl}PlayingTeams?GET=27';
-const getBoundaryTournamentsUrl = '${_baseUrl}PlayingTeams?GET=27';
+const getALlTournamentsUrl = '${_baseUrl}Tournaments?GET=';
+const getALlMatchesOfTournamentsUrl = '${_baseUrl}Match?GET=';
+const pointsTableOfTournamentsUrl = '${_baseUrl}PointsTable?GET=';
+const topRunOfTournamentsUrl = '${_baseUrl}TopRun?GET=';
+const wicketsOfTournamentsUrl = '${_baseUrl}Wickets?GET=';
+const winnerOfTournamentsUrl = '${_baseUrl}Winner?GET=';
+const playingTeamsOfTournamentsUrl = '${_baseUrl}PlayingTeams?GET=';
+const getBoundaryTournamentsUrl = '${_baseUrl}PlayingTeams?GET=';
 
 ////// notifications
-const getALlNotificationsUrl = '${_baseUrl}Notification?GET=27';
-const updateNotificationsUrl = '${_baseUrl}Notification?UpdateView=27';
+const getALlNotificationsUrl = '${_baseUrl}Notification?GET=';
+const updateNotificationsUrl = '${_baseUrl}Notification?UpdateView=';
 
 ////  profile
-const getUserProfileUrl = '${_baseUrl}UserProfile?GET=27';
-const updateUserProfileUrl = '${_baseUrl}UserProfile?Update=27';
-const updateUserProfileImageUrl = '${_baseUrl}UserProfile?FILE=27';
+const getUserProfileUrl = '${_baseUrl}UserProfile?GET=';
+const updateUserProfileUrl = '${_baseUrl}UserProfile?Update=';
+const updateUserProfileImageUrl = '${_baseUrl}UserProfile?FILE=';
 
 /// registration
 
-const saveUserRegistrationDetailUrl = '${_baseUrl}UserRegistration?Add=27';
-const getUserRegistrationDetailUrl = '${_baseUrl}UserRegistration?GET=27';
+const saveUserRegistrationDetailUrl = '${_baseUrl}UserRegistration?Add=';
+const getUserRegistrationDetailUrl = '${_baseUrl}UserRegistration?GET=';

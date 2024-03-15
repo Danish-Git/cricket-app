@@ -14,13 +14,6 @@ class BottomNavController extends GetxController {
     const UserProfileScreen(),
   ];
 
-  final iconList = <IconData>[
-    Icons.home,
-    Icons.live_tv,
-    Icons.browse_gallery,
-    Icons.person,
-  ];
-
   void setBottomNavigationBarSelectedItem(int position) {
     selectedNavigationItem = position;
     update();

@@ -1,3 +1,5 @@
+import 'package:cricket/app_utils/app_static.dart';
+
 import '../api_methods/api_constants.dart';
 import '../api_methods/api_methods.dart';
 
@@ -36,7 +38,8 @@ class HomeRepo {
 
   Future<ApiResponse> getALlTournamentsHome() {
     return _apiMethods.postRequest(
-        url: getALlTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: getALlTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -49,7 +52,8 @@ class HomeRepo {
   //////////  notification
 
   Future<ApiResponse> getAllNotificationsApi() {
-    return _apiMethods.postRequest(url: getALlNotificationsUrl, body: {}).then(
+    return _apiMethods.postRequest(
+        url: getALlNotificationsUrl + AppStatic.userId, body: {}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -62,8 +66,11 @@ class HomeRepo {
   Future<ApiResponse> updateNotificationsApi(
       {required String number, required String notificationID}) {
     return _apiMethods.postRequest(
-        url: updateNotificationsUrl,
-        body: {'Mobile': number, 'NotificationID': notificationID}).then(
+        url: updateNotificationsUrl + AppStatic.userId,
+        body: {
+          'Mobile': AppStatic.userNumber,
+          'NotificationID': notificationID
+        }).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -77,7 +84,8 @@ class HomeRepo {
 
   Future<ApiResponse> getALlTournamentsMatches() {
     return _apiMethods.postRequest(
-        url: getALlMatchesOfTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: getALlMatchesOfTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -89,7 +97,8 @@ class HomeRepo {
 
   Future<ApiResponse> getPointsTableHomeApi() {
     return _apiMethods.postRequest(
-        url: pointsTableOfTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: pointsTableOfTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -102,7 +111,8 @@ class HomeRepo {
   //////
   Future<ApiResponse> getTopRunnerHomeApi() {
     return _apiMethods.postRequest(
-        url: topRunOfTournamentsUrl, body: {'TournamentID': '3'}).then(
+        url: topRunOfTournamentsUrl + AppStatic.userId,
+        body: {'TournamentID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -115,7 +125,8 @@ class HomeRepo {
   //////
   Future<ApiResponse> getTopWicketsHomeApi() {
     return _apiMethods.postRequest(
-        url: wicketsOfTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: wicketsOfTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -128,7 +139,8 @@ class HomeRepo {
   //////
   Future<ApiResponse> getWinnerHomeApi() {
     return _apiMethods.postRequest(
-        url: winnerOfTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: winnerOfTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -141,7 +153,8 @@ class HomeRepo {
   //////
   Future<ApiResponse> getPlayingTeamHomeApi() {
     return _apiMethods.postRequest(
-        url: playingTeamsOfTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: playingTeamsOfTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
@@ -154,7 +167,8 @@ class HomeRepo {
   //////
   Future<ApiResponse> getBoundaryHomeApi() {
     return _apiMethods.postRequest(
-        url: getBoundaryTournamentsUrl, body: {'TournamentsID': '3'}).then(
+        url: getBoundaryTournamentsUrl + AppStatic.userId,
+        body: {'TournamentsID': '3'}).then(
       (value) => ApiResponse(
         status: value.status,
         data: value.status ? value.data : null,
