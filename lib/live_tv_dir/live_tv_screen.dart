@@ -1,8 +1,10 @@
+import 'package:cricket/app_utils/helper.dart';
 import 'package:cricket/live_tv_dir/wgt_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../app_utils/image_utils.dart';
+import '../app_utils/scaffold.dart';
 import '../home/match_detail/table_wgt.dart';
 import '../home/ui_components/notification_wgt/notification_utils.dart';
 import 'live_tv_controller.dart';
@@ -14,110 +16,31 @@ class LiveTvScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LiveTvScreenController>(
       init: LiveTvScreenController(),
-      builder: (controller) => DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: controller.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : SafeArea(
+      builder: (controller) => CustomScaffold(
+        setDefaultAppBar: true,
+        titleText: controller.userImg.isEmpty ? 'Live Streaming' : '  ${controller.userName}',
+        userImg: controller.userImg,
+        body: DefaultTabController(
+          length: 3,
+          child: Column(
+            children: [
+              controller.isLoading
+                ? Center(child: Helper.showLoader())
+                : Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Stack(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: Get.width * 0.7,
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: SvgImgUtils(
-                                imgName: 'assets/down_dot.svg',
-                                wth: double.infinity,
-                                hgt: Get.width,
-                              ),
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20,0,20,20),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: YoutubePlayer(
+                            controller:
+                            controller.youtubePlayerController,
+                            showVideoProgressIndicator: true,
+                            progressIndicatorColor: Colors.blueAccent,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 12, top: 20, bottom: 16),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 26,
-                                      backgroundImage: NetworkImage(
-                                        controller.userImg,
-                                      ),
-                                    ),
-                                    Text(
-                                      '  ${controller.userName}',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color.fromRGBO(0, 116, 56, 1),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    IconButton(
-                                      onPressed: () {
-                                        NotificationUtils().onNotificationTap(
-                                          controller.notificationList,
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.notifications_none,
-                                        size: 32,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //     left: 20,
-                              //     right: 20,
-                              //     bottom: 20,
-                              //   ),
-                              //   child: YoutubePlayerBuilder(
-                              //     onExitFullScreen: () {
-                              //       // controller.onFullScreenChange();
-                              //     },
-                              //     onEnterFullScreen: () {
-                              //       // controller.onFullScreenChange();
-                              //     },
-                              //     player: YoutubePlayer(
-                              //       controller:
-                              //           controller.youtubePlayerController,
-                              //       showVideoProgressIndicator: true,
-                              //       progressIndicatorColor: Colors.blueAccent,
-                              //     ),
-                              //     builder: (context, player) => player,
-                              //   ),
-                              // ),
-
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                  bottom: 20,
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: YoutubePlayer(
-                                    controller:
-                                        controller.youtubePlayerController,
-                                    showVideoProgressIndicator: true,
-                                    progressIndicatorColor: Colors.blueAccent,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
+                        ),
                       ),
                       if (!controller.isFullScreen)
                         Expanded(
@@ -159,14 +82,14 @@ class LiveTvScreen extends StatelessWidget {
                                                   alignment: Alignment.center,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
+                                                    BorderRadius.circular(
+                                                        16),
                                                     color: Colors.red,
                                                   ),
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                    MainAxisAlignment
+                                                        .center,
                                                     children: [
                                                       Container(
                                                         width: 10,
@@ -174,9 +97,9 @@ class LiveTvScreen extends StatelessWidget {
                                                         margin: const EdgeInsets
                                                             .only(right: 4),
                                                         decoration:
-                                                            const BoxDecoration(
+                                                        const BoxDecoration(
                                                           shape:
-                                                              BoxShape.circle,
+                                                          BoxShape.circle,
                                                           color: Colors.white,
                                                         ),
                                                       ),
@@ -186,7 +109,7 @@ class LiveTvScreen extends StatelessWidget {
                                                           fontSize: 14,
                                                           color: Colors.white,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                          FontWeight.w600,
                                                         ),
                                                       ),
                                                     ],
@@ -198,7 +121,7 @@ class LiveTvScreen extends StatelessWidget {
                                               padding: EdgeInsets.only(
                                                   top: 12, bottom: 16),
                                               child:
-                                                  Divider(color: Colors.grey),
+                                              Divider(color: Colors.grey),
                                             ),
 
                                             ///////  match score
@@ -212,14 +135,14 @@ class LiveTvScreen extends StatelessWidget {
                                               margin: const EdgeInsets.only(
                                                   top: 20),
                                               padding:
-                                                  const EdgeInsets.symmetric(
+                                              const EdgeInsets.symmetric(
                                                 horizontal: 20,
                                                 vertical: 20,
                                               ),
                                               color: Colors.grey.shade100,
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   const Text(
                                                     'Last 10 Balls',
@@ -227,7 +150,7 @@ class LiveTvScreen extends StatelessWidget {
                                                       fontSize: 14,
                                                       color: Colors.black,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                     ),
                                                   ),
                                                   const SizedBox(height: 14),
@@ -236,31 +159,31 @@ class LiveTvScreen extends StatelessWidget {
                                                         itemCount: controller
                                                             .scoreList.length,
                                                         scrollDirection:
-                                                            Axis.horizontal,
+                                                        Axis.horizontal,
                                                         itemBuilder:
                                                             (BuildContext ctx,
-                                                                int index) {
+                                                            int index) {
                                                           return CustomBallBox(
                                                             label: controller
-                                                                    .scoreList[
-                                                                index],
+                                                                .scoreList[
+                                                            index],
                                                             ballScore: controller
-                                                                            .scoreList[
-                                                                        index] ==
-                                                                    'W'
+                                                                .scoreList[
+                                                            index] ==
+                                                                'W'
                                                                 ? BallScore
-                                                                    .wicket
+                                                                .wicket
                                                                 : controller.scoreList[
-                                                                            index] ==
-                                                                        '4'
-                                                                    ? BallScore
-                                                                        .fourRun
-                                                                    : controller.scoreList[index] ==
-                                                                            '6'
-                                                                        ? BallScore
-                                                                            .sixRun
-                                                                        : BallScore
-                                                                            .normalRun,
+                                                            index] ==
+                                                                '4'
+                                                                ? BallScore
+                                                                .fourRun
+                                                                : controller.scoreList[index] ==
+                                                                '6'
+                                                                ? BallScore
+                                                                .sixRun
+                                                                : BallScore
+                                                                .normalRun,
                                                           );
                                                         }),
                                                   )
@@ -271,8 +194,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               alignment: Alignment.center,
                                               color: Colors.grey.shade300,
                                               child: const Row(
@@ -282,7 +205,7 @@ class LiveTvScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       color: Colors.black,
                                                     ),
                                                   ),
@@ -308,8 +231,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -324,9 +247,9 @@ class LiveTvScreen extends StatelessWidget {
                                                   CircleAvatar(
                                                     radius: 16,
                                                     backgroundColor:
-                                                        Colors.transparent,
+                                                    Colors.transparent,
                                                     backgroundImage:
-                                                        NetworkImage(helmet),
+                                                    NetworkImage(helmet),
                                                   ),
                                                   Text(
                                                     '  Batsmen Name Long Text',
@@ -359,8 +282,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -375,9 +298,9 @@ class LiveTvScreen extends StatelessWidget {
                                                   CircleAvatar(
                                                     radius: 16,
                                                     backgroundColor:
-                                                        Colors.transparent,
+                                                    Colors.transparent,
                                                     backgroundImage:
-                                                        NetworkImage(helmet),
+                                                    NetworkImage(helmet),
                                                   ),
                                                   Text(
                                                     '  Batsmen Name',
@@ -411,14 +334,14 @@ class LiveTvScreen extends StatelessWidget {
                                               height: 50,
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     'Current Partnership   ',
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
-                                                          FontWeight.w800,
+                                                      FontWeight.w800,
                                                       color: Colors.black,
                                                     ),
                                                   ),
@@ -427,7 +350,7 @@ class LiveTvScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
-                                                          FontWeight.w800,
+                                                      FontWeight.w800,
                                                       color: Colors.green,
                                                     ),
                                                   ),
@@ -439,8 +362,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               alignment: Alignment.center,
                                               color: Colors.grey.shade300,
                                               child: const Row(
@@ -450,7 +373,7 @@ class LiveTvScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       color: Colors.black,
                                                     ),
                                                   ),
@@ -476,8 +399,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -492,9 +415,9 @@ class LiveTvScreen extends StatelessWidget {
                                                   CircleAvatar(
                                                     radius: 16,
                                                     backgroundColor:
-                                                        Colors.transparent,
+                                                    Colors.transparent,
                                                     backgroundImage:
-                                                        NetworkImage(helmet),
+                                                    NetworkImage(helmet),
                                                   ),
                                                   Text(
                                                     '  Bowler Name Long Text',
@@ -527,8 +450,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -543,9 +466,9 @@ class LiveTvScreen extends StatelessWidget {
                                                   CircleAvatar(
                                                     radius: 16,
                                                     backgroundColor:
-                                                        Colors.transparent,
+                                                    Colors.transparent,
                                                     backgroundImage:
-                                                        NetworkImage(helmet),
+                                                    NetworkImage(helmet),
                                                   ),
                                                   Text(
                                                     '  Bowler Name',
@@ -585,12 +508,12 @@ class LiveTvScreen extends StatelessWidget {
                                                   top: 20, bottom: 20),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(28),
+                                                BorderRadius.circular(28),
                                                 color: Colors.green,
                                               ),
                                               child: const Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                                 children: [
                                                   Icon(
                                                     Icons.list_alt_sharp,
@@ -602,7 +525,7 @@ class LiveTvScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
-                                                          FontWeight.w700,
+                                                      FontWeight.w700,
                                                       color: Colors.white,
                                                     ),
                                                   )
@@ -622,8 +545,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 50,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               margin: const EdgeInsets.only(
                                                   top: 24),
                                               alignment: Alignment.center,
@@ -635,7 +558,7 @@ class LiveTvScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       color: Colors.black,
                                                     ),
                                                   ),
@@ -661,8 +584,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 60,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -679,31 +602,31 @@ class LiveTvScreen extends StatelessWidget {
                                                       const CircleAvatar(
                                                         radius: 16,
                                                         backgroundColor:
-                                                            Colors.transparent,
+                                                        Colors.transparent,
                                                         backgroundImage:
-                                                            NetworkImage(
-                                                                helmet),
+                                                        NetworkImage(
+                                                            helmet),
                                                       ),
                                                       SizedBox(
                                                         width: Get.width * 0.35,
                                                         child: const Column(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          MainAxisAlignment
+                                                              .center,
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Text(
                                                               '    Batsmen Name',
                                                               maxLines: 1,
                                                               overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                              TextOverflow
+                                                                  .ellipsis,
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color:
-                                                                    Colors.grey,
+                                                                Colors.grey,
                                                               ),
                                                             ),
                                                             Padding(
@@ -713,10 +636,10 @@ class LiveTvScreen extends StatelessWidget {
                                                                 '    c Kohli b Bumrah',
                                                                 maxLines: 1,
                                                                 overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize: 12,
                                                                   color: Colors
                                                                       .grey,
@@ -752,8 +675,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 60,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -770,31 +693,31 @@ class LiveTvScreen extends StatelessWidget {
                                                       const CircleAvatar(
                                                         radius: 16,
                                                         backgroundColor:
-                                                            Colors.transparent,
+                                                        Colors.transparent,
                                                         backgroundImage:
-                                                            NetworkImage(
-                                                                helmet),
+                                                        NetworkImage(
+                                                            helmet),
                                                       ),
                                                       SizedBox(
                                                         width: Get.width * 0.35,
                                                         child: const Column(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          MainAxisAlignment
+                                                              .center,
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Text(
                                                               '    Batsmen Name',
                                                               maxLines: 1,
                                                               overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                              TextOverflow
+                                                                  .ellipsis,
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color:
-                                                                    Colors.grey,
+                                                                Colors.grey,
                                                               ),
                                                             ),
                                                             Padding(
@@ -804,10 +727,10 @@ class LiveTvScreen extends StatelessWidget {
                                                                 '    c Kohli b Bumrah',
                                                                 maxLines: 1,
                                                                 overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize: 12,
                                                                   color: Colors
                                                                       .grey,
@@ -843,8 +766,8 @@ class LiveTvScreen extends StatelessWidget {
                                             Container(
                                               height: 60,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12),
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border(
@@ -861,31 +784,31 @@ class LiveTvScreen extends StatelessWidget {
                                                       const CircleAvatar(
                                                         radius: 16,
                                                         backgroundColor:
-                                                            Colors.transparent,
+                                                        Colors.transparent,
                                                         backgroundImage:
-                                                            NetworkImage(
-                                                                helmet),
+                                                        NetworkImage(
+                                                            helmet),
                                                       ),
                                                       SizedBox(
                                                         width: Get.width * 0.35,
                                                         child: const Column(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          MainAxisAlignment
+                                                              .center,
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Text(
                                                               '    Batsmen Name',
                                                               maxLines: 1,
                                                               overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                              TextOverflow
+                                                                  .ellipsis,
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color:
-                                                                    Colors.grey,
+                                                                Colors.grey,
                                                               ),
                                                             ),
                                                             Padding(
@@ -895,10 +818,10 @@ class LiveTvScreen extends StatelessWidget {
                                                                 '    c Kohli b Bumrah',
                                                                 maxLines: 1,
                                                                 overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize: 12,
                                                                   color: Colors
                                                                       .grey,
@@ -938,35 +861,35 @@ class LiveTvScreen extends StatelessWidget {
                                               height: 70,
                                               color: Colors.white,
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 16),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16),
                                               child: const Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   Text(
                                                     'EXTRAS',
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                      FontWeight.w600,
                                                       color: Colors.grey,
                                                     ),
                                                   ),
                                                   Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                    MainAxisAlignment
+                                                        .center,
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                                    CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
                                                         '14',
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                          FontWeight.w600,
                                                           color: Colors.black,
                                                         ),
                                                       ),
@@ -976,7 +899,7 @@ class LiveTvScreen extends StatelessWidget {
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                          FontWeight.w600,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
@@ -1057,8 +980,10 @@ class LiveTvScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+
+            ],
+          ),
         ),
-      ),
-    );
+    ));
   }
 }
