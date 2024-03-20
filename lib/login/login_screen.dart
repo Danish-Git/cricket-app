@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                   height: 52,
                   width: Get.width * 0.8,
                   margin: const EdgeInsets.only(left: 12),
-                  padding: EdgeInsets.only(bottom: 4),
+                  padding: const EdgeInsets.only(bottom: 4),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -120,12 +120,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 CustomButton(
-                    label: 'Continue',
-                    wth: double.infinity,
-                    margin: const EdgeInsets.only(top: 28, left: 22, right: 22),
-                    hgt: 50,
-                    color: ColorConstants().greenColor,
-                    onTap: () => controller.validateAndSendOTP()),
+                  label: 'Continue',
+                  wth: double.infinity,
+                  margin: const EdgeInsets.only(top: 28, left: 22, right: 22),
+                  hgt: 50,
+                  color: ColorConstants().greenColor,
+                  // onTap: () => controller.validateAndSendOTP(),
+                  onTap: (){
+                    Get.toNamed(AppScreenConst.bottomNav);
+                  },
+                ),
               ],
             ),
           ),
