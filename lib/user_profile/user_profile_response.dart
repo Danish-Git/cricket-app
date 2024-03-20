@@ -42,9 +42,9 @@ class UserProfileData {
   UserProfileData.fromJson(Map<String, dynamic> json){
     UserID = json['UserID'];
     Mobile = json['Mobile'];
-    UserName = json['UserName'];
-    Email = json['Email'];
-    ProfilePicture = json['ProfilePicture'];
+    UserName = json['UserName'] ?? '';
+    Email = json['Email'] ?? '';
+    ProfilePicture = json['ProfilePicture'] ?? '';
     FireBaseID = json['FireBaseID'];
   }
 

@@ -101,6 +101,7 @@ class LoginScreen extends StatelessWidget {
                               maxLength: 10,
                               onSaved: controller.getPhoneNo,
                               validator: controller.validatePhoneNo,
+                              keyboardType: TextInputType.phone,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(bottom: 6),

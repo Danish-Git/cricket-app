@@ -2,6 +2,7 @@ import 'package:cricket/live_tv_dir/live_tv_screen.dart';
 import 'package:cricket/user_profile/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../gallery/index.dart';
 import '../home/home_screen.dart';
 
 class BottomNavController extends GetxController {
@@ -10,7 +11,7 @@ class BottomNavController extends GetxController {
   List pages = [
     const HomeScreen(),
     const LiveTvScreen(),
-    const SizedBox(),
+    const GalleryScreen(),
     const UserProfileScreen(),
   ];
 

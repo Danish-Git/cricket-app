@@ -26,4 +26,24 @@ class Helper {
       );
       },
   );
+
+  static Widget showError(String errorMessage) => Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(Icons.info_outline, size: 32, color: ColorConstants().redColor),
+      Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Text(
+          errorMessage,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: ColorConstants().redColor,
+          ),
+        ),
+      ),
+    ],
+  );
 }

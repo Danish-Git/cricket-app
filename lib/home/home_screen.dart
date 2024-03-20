@@ -1,9 +1,10 @@
-import 'package:cricket/home/ui_components/notification_wgt/notification_utils.dart';
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:cricket/app_utils/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_utils/color_constants.dart';
 import '../app_utils/custom_carousel.dart';
-import '../app_utils/image_utils.dart';
 import 'home_controller.dart';
 import 'ui_components/quiz_section/index.dart';
 
@@ -14,216 +15,110 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       init: HomeController(),
-      builder: (controller) => Scaffold(
-        backgroundColor: Colors.white,
-        body: controller.isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: Get.width * 0.7,
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: SvgImgUtils(
-                                imgName: 'assets/down_dot.svg',
-                                wth: double.infinity,
-                                hgt: Get.width,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 12, top: 20, bottom: 24),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 26,
-                                      backgroundImage: NetworkImage(
-                                        controller.userImg,
-                                      ),
-                                    ),
-                                    Text(
-                                      '  ${controller.userName}',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color.fromRGBO(0, 116, 56, 1),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    IconButton(
-                                      onPressed: () {
-                                        NotificationUtils().onNotificationTap(
-                                          controller.notificationList,
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.notifications_outlined,
-                                        size: 32,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              CustomCarousel(
-                                boxHgt: Get.width * 0.5,
-                                boxWdt: double.maxFinite,
-                                itemList: controller.completeTournament,
-                                index: controller.completedIndex,
-                                carouselController:
-                                    controller.completedCarouselController,
-                                onPageChanged: (index, _) {
-                                  controller.onCompletedChange(index);
-                                },
-                              ),
-                              const SizedBox(height: 16),
-                              Center(
-                                child: Text(
-                                  'Question',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorConstants().redColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      QuizSection(controller: controller),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          top: 24,
-                          bottom: 8,
-                          left: 18,
-                          right: 18,
-                        ),
-                        child: Text(
-                          'Up Coming Matches',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(0, 0, 0, 1),
-                          ),
-                        ),
-                      ),
-                      CustomCarousel(
-                        boxHgt: Get.width * 0.5,
-                        boxWdt: double.infinity,
-                        itemList: controller.upComingTournament,
-                        index: controller.upComingIndex,
-                        carouselController:
-                            controller.upComingCarouselController,
-                        onPageChanged: (index, _) {
-                          controller.onUpComingChange(index);
-                        },
-                      ),
-                      //////
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          top: 24,
-                          bottom: 8,
-                          left: 18,
-                          right: 18,
-                        ),
-                        child: Text(
-                          'Running Matches',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(0, 0, 0, 1),
-                          ),
-                        ),
-                      ),
-                      CustomCarousel(
-                        boxHgt: Get.width * 0.5,
-                        boxWdt: double.infinity,
-                        itemList: controller.runningTournament,
-                        index: controller.runningIndex,
-                        carouselController:
-                            controller.runningCarouselController,
-                        onPageChanged: (index, _) {
-                          controller.onRunningChange(index);
-                        },
-                      ),
-
-                      ///////
-
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          top: 24,
-                          bottom: 8,
-                          left: 18,
-                          right: 18,
-                        ),
-                        child: Text(
-                          'Completed Matches',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(0, 0, 0, 1),
-                          ),
-                        ),
-                      ),
-
-                      CustomCarousel(
-                        boxHgt: Get.width * 0.5,
-                        boxWdt: double.infinity,
-                        itemList: controller.completeTournament,
-                        index: controller.completedIndex,
-                        carouselController:
-                            controller.completedCarouselController,
-                        onPageChanged: (index, _) {
-                          controller.onCompletedChange(index);
-                        },
-                      ),
-
-                      ///////////////
-
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          top: 24,
-                          bottom: 8,
-                          left: 18,
-                          right: 18,
-                        ),
-                        child: Text(
-                          'Cancelled Matches',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(0, 0, 0, 1),
-                          ),
-                        ),
-                      ),
-
-                      CustomCarousel(
-                        boxHgt: Get.width * 0.5,
-                        boxWdt: double.infinity,
-                        itemList: controller.cancelTournament,
-                        index: controller.cancelIndex,
-                        carouselController: controller.cancelCarouselController,
-                        onPageChanged: (index, _) {
-                          controller.onCancelChange(index);
-                        },
-                      ),
-                    ],
+      builder: (controller) => CustomScaffold(
+        setDefaultAppBar: true,
+        titleText: controller.userImg.isEmpty ? 'Cricket Club' : '  ${controller.userName}',
+        userImg: controller.userImg,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomCarousel(
+                boxHgt: Get.width * 0.5,
+                boxWdt: double.maxFinite,
+                itemList: controller.completeTournament,
+                index: controller.completedIndex,
+                carouselController:
+                controller.completedCarouselController,
+                onPageChanged: (index, _) {
+                  controller.onCompletedChange(index);
+                },
+              ),
+              const SizedBox(height: 16),
+              Center(
+                child: Text(
+                  'Question',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: ColorConstants().redColor,
                   ),
                 ),
               ),
-      ),
+              QuizSection(controller: controller),
+              ///   Up Coming Tournament
+              if(controller.upComingTournament.isNotEmpty)
+                tournamentView(
+                    title: 'Up Coming Tournament',
+                    mainList: controller.upComingTournament,
+                    index: controller.upComingIndex,
+                    carouselController: controller.upComingCarouselController,
+                    onPageChanged: (index, _) => controller.onUpComingChange(index)
+                ),
+              ///   Running Tournament
+              if(controller.runningTournament.isNotEmpty)
+                tournamentView(
+                    title: 'Running Tournament',
+                    mainList: controller.runningTournament,
+                    index: controller.runningIndex,
+                    carouselController: controller.runningCarouselController,
+                    onPageChanged: (index, _) => controller.onRunningChange(index)
+                ),
+              ///   Completed Tournament
+              if(controller.completeTournament.isNotEmpty)
+                tournamentView(
+                    title: 'Completed Tournament',
+                    mainList: controller.completeTournament,
+                    index: controller.completedIndex,
+                    carouselController: controller.completedCarouselController,
+                    onPageChanged: (index, _) => controller.onCompletedChange(index)
+                ),
+              ///   Cancelled Tournament
+              if(controller.cancelTournament.isNotEmpty)
+                tournamentView(
+                    title: 'Cancelled Tournament',
+                    mainList: controller.cancelTournament,
+                    index: controller.cancelIndex,
+                    carouselController: controller.cancelCarouselController,
+                    onPageChanged: (index, _) => controller.onCancelChange(index)
+                ),
+            ],
+          ),
+        ),
+      )
     );
   }
+
+  Widget tournamentView({required String title, required List<Widget> mainList, required int index,
+    required CarouselController carouselController, Function(int, CarouselPageChangedReason)? onPageChanged}) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 24, 18, 8),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Color.fromRGBO(0, 0, 0, 1),
+              ),
+            ),
+          ),
+
+          CustomCarousel(
+            boxHgt: Get.width * 0.5,
+            boxWdt: double.infinity,
+            itemList: mainList,
+            index: index,
+            carouselController: carouselController,
+            onPageChanged: onPageChanged,
+          ),
+        ]);
+  }
+
+
 }
 
 class AnswerWgt extends StatelessWidget {
