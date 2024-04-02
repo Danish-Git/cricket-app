@@ -24,7 +24,7 @@ class PaymentOptionController extends GetxController {
   Future<void> fetchUPIApps() async {
     try {
       toggleIsLoading();
-      upiApps = await upiIndia.getAllUpiApps();
+      upiApps = await upiIndia.getAllUpiApps(allowNonVerifiedApps: true);
       upiApps.sort((a, b) => a.name.compareTo(b.name));
       selectedUpiApp = upiApps[selectedIndex];
       toggleIsLoading();

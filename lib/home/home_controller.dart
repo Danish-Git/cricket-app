@@ -2,10 +2,8 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cricket/app_utils/app_static.dart';
 import 'package:cricket/home/response/quiz_question_response.dart';
 import 'package:cricket/routing_dir/app_screen_const.dart';
-import 'package:cricket/user_profile/UserProfileRepo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../user_profile/user_profile_response.dart';
 import 'home_repo.dart';
 import '../response_dir/get_all_tournament_response.dart';
 import 'response/notification_response.dart';
@@ -20,21 +18,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getUserDetail();
     getAllNotifications();
-  }
-
-  String userName = '';
-  String userImg = '';
-
-  void getUserDetail() {
-    UserProfileRepo().getUserProfile().then((value) {
-      if (value.status) {
-        UserProfileResponse response = UserProfileResponse.fromJson(value.data);
-        userName = response.data[0].UserName;
-        userImg = response.data[0].ProfilePicture;
-      }
-    });
   }
 
 /////   NOTIFICATION
@@ -88,16 +72,33 @@ class HomeController extends GetxController {
     });
   }
 
+  ////////// select your team
+
+  ScrollController teamListController = ScrollController();
+
+  List<String> teamList = [
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150',
+    'http://via.placeholder.com/350x150'
+  ];
+
   ////////
 
   int upComingIndex = 0;
   int runningIndex = 0;
   int completedIndex = 0;
+  int iplIndex = 0;
   int cancelIndex = 0;
 
   final CarouselController upComingCarouselController = CarouselController();
   final CarouselController runningCarouselController = CarouselController();
   final CarouselController completedCarouselController = CarouselController();
+  final CarouselController iplCarouselController = CarouselController();
   final CarouselController cancelCarouselController = CarouselController();
 
   void onUpComingChange(int index) {
@@ -112,6 +113,11 @@ class HomeController extends GetxController {
 
   void onCompletedChange(int index) {
     completedIndex = index;
+    update();
+  }
+
+  void onIplChange(int index) {
+    iplIndex = index;
     update();
   }
 
@@ -131,6 +137,7 @@ class HomeController extends GetxController {
   List<Widget> runningTournament = [];
   List<Widget> completeTournament = [];
   List<Widget> cancelTournament = [];
+  List<Widget> iplTournament = [];
 
   /////
 
@@ -138,6 +145,7 @@ class HomeController extends GetxController {
   List<AllTournamentList> runningList = [];
   List<AllTournamentList> completeList = [];
   List<AllTournamentList> cancelList = [];
+  List<AllTournamentList> iplList = [];
 
   void getAllTournament() {
     _homeRepo.getALlTournamentsHome().then((value) {
@@ -160,6 +168,7 @@ class HomeController extends GetxController {
         addUpComingTournaments();
         addRunningTournaments();
         addCompletedTournaments();
+        addIplTournaments();
         addCancelTournaments();
       }
     });
@@ -208,6 +217,24 @@ class HomeController extends GetxController {
 
   void addCompletedTournaments() {
     completeTournament = completeList
+        .map(
+          (item) => Container(
+            margin: const EdgeInsets.all(2.0),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: Image.network(
+                item.Banner,
+                fit: BoxFit.cover,
+                width: 1000,
+              ),
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  void addIplTournaments() {
+    iplTournament = completeList
         .map(
           (item) => Container(
             margin: const EdgeInsets.all(2.0),

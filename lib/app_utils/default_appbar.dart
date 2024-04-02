@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../home/ui_components/notification_wgt/notification_utils.dart';
 
-PreferredSizeWidget? defaultAppBar({required String titleText, required String userImg,}) {
+PreferredSizeWidget? defaultAppBar({
+  required String titleText,
+  required String userImg,
+}) {
   return AppBar(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -15,13 +18,14 @@ PreferredSizeWidget? defaultAppBar({required String titleText, required String u
       ),
     ),
     centerTitle: userImg.isEmpty,
-    leading: userImg.isEmpty ? const SizedBox.shrink()
-      : CircleAvatar(
-      radius: 26,
-      backgroundImage: NetworkImage(
-        userImg,
-      ),
-    ),
+    leading: userImg.isEmpty
+        ? const SizedBox.shrink()
+        : CircleAvatar(
+            radius: 26,
+            backgroundImage: NetworkImage(
+              userImg,
+            ),
+          ),
     actions: [
       IconButton(
         onPressed: () => NotificationUtils().onNotificationTap(),

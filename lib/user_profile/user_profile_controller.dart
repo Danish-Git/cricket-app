@@ -1,11 +1,11 @@
 import 'dart:io';
+import 'package:cricket/app_utils/app_static.dart';
 import 'package:cricket/app_utils/loader_message_utils.dart';
 import 'package:cricket/user_profile/UserProfileRepo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'user_profile_response.dart';
+import '../app_utils/shared_pref_utils.dart';
 
 class UserProfileController extends GetxController {
   ////////
@@ -16,29 +16,21 @@ class UserProfileController extends GetxController {
   var phoneController = TextEditingController();
   var emailController = TextEditingController();
 
-  String userProfileImg = '';
+  late SharedPreferencesService prefs;
 
   @override
   void onInit() {
     super.onInit();
-    getUserDetail();
+    getPrefInit();
   }
 
-  List<UserProfileData> userProfile = [];
+  void getPrefInit() async {
+    nameController = TextEditingController(text: AppStatic.userName);
+    phoneController =
+        TextEditingController(text: '+91-${AppStatic.userNumber}}');
+    emailController = TextEditingController(text: AppStatic.userEmail);
 
-  void getUserDetail() {
-    _userProfileRepo.getUserProfile().then((value) {
-      if (value.status) {
-        UserProfileResponse response = UserProfileResponse.fromJson(value.data);
-        userProfile.addAll(response.data);
-        nameController = TextEditingController(text: userProfile[0].UserName);
-        phoneController =
-            TextEditingController(text: '+91-${userProfile[0].Mobile}');
-        emailController = TextEditingController(text: userProfile[0].Email);
-        userProfileImg = userProfile[0].ProfilePicture;
-        update();
-      }
-    });
+    prefs = await SharedPreferencesService.getInstance();
   }
 
   /////// DIALOG FOR IMAGE UPLOAD OPTIONS
@@ -98,9 +90,8 @@ class UserProfileController extends GetxController {
         .then((value) {
       Get.back();
       if (value.status) {
+        print(value.data);
         showTopSnackBarSuccessColor(value.message.toString());
-        userProfile.clear();
-        getUserDetail();
       } else {
         showTopSnackBarError(value.message.toString());
       }
@@ -109,7 +100,7 @@ class UserProfileController extends GetxController {
 
   ////////
 
-  void updateUserProfileDetails() {
+  void updateUserProfileDetails() async {
     showLoaderDialog();
     _userProfileRepo
         .updateUserProfileDetails(
@@ -120,6 +111,11 @@ class UserProfileController extends GetxController {
       Get.back();
       if (value.status) {
         showTopSnackBarSuccessColor(value.message.toString());
+
+        AppStatic.userName = nameController.text.trim();
+        AppStatic.userEmail = emailController.text.trim();
+        prefs.setString('userName', nameController.text.trim());
+        prefs.setString('userEmail', emailController.text.trim());
       } else {
         showTopSnackBarError(value.message.toString());
       }

@@ -5,8 +5,6 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../app_utils/color_constants.dart';
 import '../app_utils/custom_button.dart';
 import '../app_utils/image_utils.dart';
-import '../live_tv_dir/full_screen_youtube.dart';
-import '../routing_dir/app_screen_const.dart';
 import 'login_controller.dart';
 
 class OtpScreen extends StatelessWidget {

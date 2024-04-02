@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../app_utils/color_constants.dart';
 import '../app_utils/custom_button.dart';
 import '../app_utils/image_utils.dart';
-import '../routing_dir/app_screen_const.dart';
 import 'login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -126,10 +125,10 @@ class LoginScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 28, left: 22, right: 22),
                   hgt: 50,
                   color: ColorConstants().greenColor,
-                  // onTap: () => controller.validateAndSendOTP(),
-                  onTap: (){
-                    Get.toNamed(AppScreenConst.bottomNav);
-                  },
+                  onTap: () => controller.validateAndSendOTP(),
+                  // onTap: (){
+                  //   Get.toNamed(AppScreenConst.bottomNav);
+                  // },
                 ),
               ],
             ),

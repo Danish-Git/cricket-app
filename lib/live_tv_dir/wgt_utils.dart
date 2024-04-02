@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../app_utils/app_static.dart';
 import '../home/match_detail/table_wgt.dart';
 
 class MatchScoreWgt extends StatelessWidget {
@@ -210,6 +211,259 @@ class CustomBox extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           color: isLabel ? Colors.black : Colors.grey,
+        ),
+      ),
+    );
+  }
+}
+
+class FallOfWicketItem extends StatelessWidget {
+  const FallOfWicketItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            width: 1.5,
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: Get.width * 0.35,
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Batsmen Name',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 4),
+                  child: Text(
+                    '10.1 Over',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          const CustomBox(
+            label: '1-72',
+            isLabel: false,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//////////
+
+class YetToBatItem extends StatelessWidget {
+  const YetToBatItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            width: 1.5,
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: const Row(
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: Colors.transparent,
+            backgroundImage: NetworkImage(helmet),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '    Batsmen Name',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: Text(
+                  '    In at 7',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+////////////// BOWLER ITEM
+
+class BowlerItem extends StatelessWidget {
+  const BowlerItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            width: 1.5,
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Row(
+            children: [
+              const CircleAvatar(
+                radius: 16,
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(helmet),
+              ),
+              SizedBox(
+                width: Get.width * 0.35,
+                child: const Text(
+                  '    Batsmen Name',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          const CustomBox(label: '5', isLabel: false),
+          const CustomBox(label: '111', isLabel: false),
+          const CustomBox(label: '23', isLabel: false),
+          const CustomBox(label: '23', isLabel: false),
+          const CustomBox(
+            label: '44.4',
+            isLabel: false,
+            isLast: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*  WIDGETS FOR COMMENTARY PART */
+
+class CommentaryItem extends StatelessWidget {
+  const CommentaryItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      margin: const EdgeInsets.only(top: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            width: 1.5,
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: ListTile(
+        leading: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Text(
+              '7.5',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+            Container(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red,
+              ),
+              child: const Text(
+                'W',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+        title: const Text(
+          'Jadeja to Dale steyn , Wicket!',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(
+            AppStatic.longTxt,
+            maxLines: 7,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Colors.black54,
+            ),
+          ),
         ),
       ),
     );

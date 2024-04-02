@@ -2,7 +2,10 @@ import 'package:cricket/home/match_detail/table_wgt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_utils/app_wgts_utils.dart';
+import '../../app_utils/color_constants.dart';
+import '../../app_utils/custom_button.dart';
 import '../../app_utils/image_utils.dart';
+import '../../tournament_register_dir/tournament_register_screen.dart';
 import 'team_detail_controller.dart';
 
 class TeamDetailScreen extends StatelessWidget {
@@ -100,17 +103,6 @@ class TeamDetailScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                  child: Text(
-                    'Team players details',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.only(
@@ -118,19 +110,90 @@ class TeamDetailScreen extends StatelessWidget {
                       left: 20,
                       right: 20,
                     ),
-                    child: Wrap(
-                      runSpacing: 12,
-                      spacing: 20,
-                      children: controller.playerList
-                          .map(
-                            (i) => const PlayerItem(),
-                          )
-                          .toList(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Team dress',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 170,
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(247, 247, 247, 1),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(
+                              color: const Color.fromRGBO(0, 116, 56, 0.2),
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Get.width * 0.37,
+                                height: 150,
+                                child: Image.network(
+                                  'http://via.placeholder.com/350x150',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.37,
+                                height: 150,
+                                child: Image.network(
+                                  'http://via.placeholder.com/350x150',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Team players details',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Wrap(
+                          runSpacing: 12,
+                          spacing: 20,
+                          children: controller.playerList
+                              .map(
+                                (i) => const PlayerItem(),
+                              )
+                              .toList(),
+                        ),
+                      ],
                     ),
                   ),
                 )
               ],
             ),
+            floatingActionButton: CustomButton(
+              label: 'Register in tournament',
+              wth: Get.width * 0.9,
+              hgt: 50,
+              color: ColorConstants().greenColor,
+              onTap: () {
+                Get.to(() => const TournamentRegisterScreen());
+              },
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
           ),
         );
       },

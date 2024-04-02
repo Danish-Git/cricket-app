@@ -1,11 +1,13 @@
 import 'package:cricket/app_utils/app_static.dart';
 import 'package:cricket/app_utils/helper.dart';
+import 'package:cricket/user_profile/UserProfileRepo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../app_utils/shared_pref_utils.dart';
 import '../routing_dir/app_screen_const.dart';
+import '../user_profile/user_profile_response.dart';
 
 class LoginController extends GetxController {
   var phoneController = TextEditingController();
@@ -90,9 +92,7 @@ class LoginController extends GetxController {
       final User? currentUser = auth.currentUser;
       assert(user?.uid == currentUser?.uid);
       if (user != null) {
-
-         // LoginRepo
-
+        // LoginRepo
 
         /// #important
         /// Save phoneNumber, user.uid in shared preferences
@@ -105,9 +105,7 @@ class LoginController extends GetxController {
 
         AppStatic.userNumber = phoneNumber!;
         AppStatic.userUID = user.uid;
-
-        Helper.showToast('Sign in successfully');
-        Get.offAllNamed(AppScreenConst.bottomNav);
+        getUserDetail();
       } else {
         Helper.showToast('Sign in failed');
       }
@@ -116,6 +114,26 @@ class LoginController extends GetxController {
     } finally {
       toggleIsVerifyingOTP();
     }
+  }
+
+  void getUserDetail() {
+    List<UserProfileData> userProfile = [];
+    String img =
+        'https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg';
+
+    UserProfileRepo().getUserProfile().then((value) {
+      if (value.status) {
+        UserProfileResponse response = UserProfileResponse.fromJson(value.data);
+        userProfile.addAll(response.data);
+        AppStatic.userName = userProfile[0].UserName;
+        AppStatic.userProfileImage = userProfile[0].ProfilePicture.isNotEmpty
+            ? userProfile[0].ProfilePicture
+            : img;
+        AppStatic.userEmail = userProfile[0].Email;
+        Helper.showToast('Sign in successfully');
+        Get.offAllNamed(AppScreenConst.bottomNav);
+      }
+    });
   }
 
 //////////

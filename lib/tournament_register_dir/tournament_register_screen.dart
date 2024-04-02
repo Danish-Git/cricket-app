@@ -14,23 +14,13 @@ class TournamentRegisterScreen extends StatelessWidget {
       init: TournamentRegisterController(),
       global: false,
       builder: (controller) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Registration',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: ColorConstants().greenColor,
-            ),
-          ),
-          centerTitle: true,
-          leading: const BackBtnIcon(),
-        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const CustomAppBar(label: 'Registration', isGreen: true),
+              const SizedBox(height: 38),
               Text(
                 'Registration for tournament',
                 style: TextStyle(
@@ -57,6 +47,15 @@ class TournamentRegisterScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
+              CustomDropDown(
+                label: 'Tournament',
+                emptyVal: 'Select tournament',
+                selectedVal: controller.selectedTournament,
+                list: controller.tournamentList,
+                onTap: (String? val) {
+                  controller.onTournamentChange(val!);
+                },
+              ),
               CustomDropDown(
                 label: 'Age',
                 emptyVal: 'Select age',
@@ -132,7 +131,7 @@ class CustomDropDown extends StatelessWidget {
               fontWeight: FontWeight.w500,
               color: Colors.black,
             ),
-            value: selectedVal.isNotEmpty ? selectedVal : emptyVal,
+            value: selectedVal,
             items: list.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(value: value, child: Text(value));
             }).toList(),

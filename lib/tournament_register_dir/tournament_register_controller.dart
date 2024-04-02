@@ -1,8 +1,21 @@
 import 'package:get/get.dart';
 
 class TournamentRegisterController extends GetxController {
-  String selectedAge = '22';
-  List<String> ageList = ['22', '23', '24', '25'];
+  String selectedTournament = 'Under 14';
+  List<String> tournamentList = [
+    'Under 14',
+    'Under 16',
+    'Under 19',
+    'Ranji Trophy'
+  ];
+
+  void onTournamentChange(String tournament) {
+    selectedTournament = tournament;
+    update();
+  }
+
+  String selectedAge = 'Under 14';
+  List<String> ageList = ['Under 14', 'Under 16', 'Under 19', 'Ranji Trophy'];
 
   void onAgeChange(String age) {
     selectedAge = age;
@@ -11,10 +24,10 @@ class TournamentRegisterController extends GetxController {
 
   String selectedPlayerType = 'Bowler';
   List<String> playerTypeList = [
-    "Batsmen",
-    "Bowler",
-    "Batsman & WicketKeeper",
-    "All-Rounder"
+    'Bowler',
+    'Batsmen',
+    'Batsman & WicketKeeper',
+    'All-Rounder'
   ];
 
   void onPlayerChange(String playerType) {
