@@ -15,6 +15,7 @@ class CustomScaffold extends StatelessWidget {
   final Widget? body;
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final bool isBackButtonEnable;
 
   const CustomScaffold({
     Key? key,
@@ -29,6 +30,7 @@ class CustomScaffold extends StatelessWidget {
     this.body,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
+    this.isBackButtonEnable = false,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class CustomScaffold extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: setDefaultAppBar ?? false ? defaultAppBar(titleText: titleText ?? 'Cricket Club', userImg: userImg ?? '')
+            appBar: setDefaultAppBar ?? false ? defaultAppBar(titleText: titleText ?? 'Cricket Club', userImg: userImg ?? '', isBackButtonEnable : isBackButtonEnable)
             : AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,

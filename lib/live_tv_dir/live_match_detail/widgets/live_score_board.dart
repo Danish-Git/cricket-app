@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../app_utils/app_static.dart';
-import '../home/match_detail/table_wgt.dart';
 
-class MatchScoreWgt extends StatelessWidget {
-  const MatchScoreWgt({super.key});
+import '../../../app_utils/app_static.dart';
+import '../../../home/match_detail/table_wgt.dart';
+
+class LiveScoreBoard extends StatelessWidget {
+  const LiveScoreBoard({super.key});
 
   @override
   Widget build(BuildContext context) {

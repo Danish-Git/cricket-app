@@ -1,4 +1,3 @@
-import 'package:cricket/home/home_binding.dart';
 import 'package:cricket/home/home_screen.dart';
 import 'package:cricket/home/match_detail/match_detail_binding.dart';
 import 'package:cricket/home/match_detail/match_detail_screen.dart';
@@ -52,7 +51,6 @@ abstract class AppPages {
     GetPage(
       name: AppScreenConst.home,
       page: () => const HomeScreen(),
-      binding: HomeBinding(),
     ),
     GetPage(
       name: AppScreenConst.matchDetail,

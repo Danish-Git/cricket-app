@@ -1,5 +1,4 @@
-import 'package:cricket/live_tv_dir/live_tv_screen.dart';
-import 'package:cricket/routing_dir/app_screen_const.dart';
+import 'package:cricket/live_tv_dir/live_match_detail/live_tv_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_utils/app_static.dart';
@@ -20,9 +19,7 @@ class LiveScreen extends StatelessWidget {
           titleText: AppStatic.userName.isEmpty
               ? 'Cricket Club'
               : '  ${AppStatic.userName}',
-          userImg: AppStatic.userProfileImage.isNotEmpty
-              ? AppStatic.userProfileImage
-              : AppStatic.tempImg,
+          userImg: AppStatic.userProfileImage,
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

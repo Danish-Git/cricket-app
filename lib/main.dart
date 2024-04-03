@@ -8,6 +8,7 @@ import 'routing_dir/screen_route.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
 
   await FirebaseMessaging.instance.requestPermission(

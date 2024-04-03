@@ -16,15 +16,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
+        global: false,
         init: HomeController(),
         builder: (controller) => CustomScaffold(
               setDefaultAppBar: true,
               titleText: AppStatic.userName.isEmpty
                   ? 'Cricket Club'
                   : '  ${AppStatic.userName}',
-              userImg: AppStatic.userProfileImage.isNotEmpty
-                  ? AppStatic.userProfileImage
-                  : AppStatic.tempImg,
+              userImg: AppStatic.userProfileImage,
               body: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
