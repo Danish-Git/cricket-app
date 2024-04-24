@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../api_methods/api_constants.dart';
 import '../../../app_utils/app_static.dart';
-import '../../../home/match_detail/table_wgt.dart';
 
 class LiveScoreBoard extends StatelessWidget {
   const LiveScoreBoard({super.key});

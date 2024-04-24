@@ -21,7 +21,6 @@ class RadioChip extends StatelessWidget {
       child: Container(
         width: 80,
         height: 20,
-        margin: const EdgeInsets.only(left: 8),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),

@@ -15,9 +15,11 @@ const saveQuizAnswerUrl = '${_baseUrl}Quiz?Ans=null';
 ////
 
 const getALlTournamentsUrl = '${_baseUrl}Tournaments?GET=';
+const getAllTournamentsList = '${_baseUrl}TournamentsStatus?GET=null'; //
+const matchList = '${_baseUrl}MatchList?GET=null'; //
 const getALlMatchesOfTournamentsUrl = '${_baseUrl}Match?GET=';
 const pointsTableOfTournamentsUrl = '${_baseUrl}PointsTable?GET=';
-const topRunOfTournamentsUrl = '${_baseUrl}TopRun?GET=';
+const topRunOfTournamentsUrl = '${_baseUrl}TopRun?GET=null';
 const wicketsOfTournamentsUrl = '${_baseUrl}Wickets?GET=';
 const winnerOfTournamentsUrl = '${_baseUrl}Winner?GET=';
 const playingTeamsOfTournamentsUrl = '${_baseUrl}PlayingTeams?GET=';
@@ -36,3 +38,8 @@ const updateUserProfileImageUrl = '${_baseUrl}UserProfile?FILE=';
 
 const saveUserRegistrationDetailUrl = '${_baseUrl}UserRegistration?Add=';
 const getUserRegistrationDetailUrl = '${_baseUrl}UserRegistration?GET=';
+
+
+const getAdvertisementsUrl = '${_baseUrl}AdvertisementBanner1/?GET=null';
+
+const String helmet = 'http://via.placeholder.com/350x150';

@@ -1,9 +1,9 @@
-import 'package:cricket/home/match_detail/table_wgt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../app_utils/app_wgts_utils.dart';
 import '../app_utils/color_constants.dart';
+import '../screens/tournament/details/table_wgt.dart';
 import 'player_profile_controller.dart';
 
 class PlayerProfileScreen extends StatelessWidget {

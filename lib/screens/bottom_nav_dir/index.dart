@@ -1,8 +1,10 @@
-import 'package:cricket/bottom_nav_dir/bottom_nav_controller.dart';
+
 import 'package:fancy_bottom_navigation_2/fancy_bottom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'controller.dart';
 
 class BottomNavScreen extends StatelessWidget {
   const BottomNavScreen({Key? key}) : super(key: key);

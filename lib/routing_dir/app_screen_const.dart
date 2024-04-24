@@ -9,6 +9,7 @@ abstract class AppScreenConst {
 
   static const bottomNav = '/bottomNav';
   static const home = '/home';
+  static const tournamentDetail = '/tournamentDetail';
   static const matchDetail = '/matchDetail';
   static const teamDetail = '/teamDetail';
 

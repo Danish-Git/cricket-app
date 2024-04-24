@@ -1,6 +1,6 @@
-import 'package:cricket/home/match_detail/table_wgt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../api_methods/api_constants.dart';
 import '../../app_utils/app_wgts_utils.dart';
 import '../../app_utils/color_constants.dart';
 import '../../app_utils/custom_button.dart';

@@ -1,6 +1,4 @@
 import 'package:cricket/home/home_screen.dart';
-import 'package:cricket/home/match_detail/match_detail_binding.dart';
-import 'package:cricket/home/match_detail/match_detail_screen.dart';
 import 'package:cricket/home/team_detail/team_detail_binding.dart';
 import 'package:cricket/home/team_detail/team_detail_screen.dart';
 import 'package:cricket/login/login_screen.dart';
@@ -15,10 +13,11 @@ import 'package:cricket/user_profile/user_profile_screen.dart';
 import 'package:cricket/welcome/welcome_binding.dart';
 import 'package:cricket/welcome/welcome_screen.dart';
 import 'package:get/get.dart';
-import '../bottom_nav_dir/bottom_nav_screen.dart';
 import '../login/login_binding.dart';
 import '../registration_form_dir/registration_form_binding.dart';
 import '../registration_form_dir/registration_form_screen.dart';
+import '../screens/bottom_nav_dir/index.dart';
+import '../screens/tournament/details/index.dart';
 import '../splash/splash_screen.dart';
 import 'app_screen_const.dart';
 
@@ -53,10 +52,13 @@ abstract class AppPages {
       page: () => const HomeScreen(),
     ),
     GetPage(
-      name: AppScreenConst.matchDetail,
-      page: () => const MatchDetailScreen(),
-      binding: MatchDetailBinding(),
+      name: AppScreenConst.tournamentDetail,
+      page: () => const TournamentDetailScreen(),
     ),
+    // GetPage(
+    //   name: AppScreenConst.matchDetail,
+    //   page: () => const MatchDetailScreen(),
+    // ),
     GetPage(
       name: AppScreenConst.teamDetail,
       page: () => const TeamDetailScreen(),

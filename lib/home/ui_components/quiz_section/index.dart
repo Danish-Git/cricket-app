@@ -12,7 +12,6 @@ class QuizSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      height: 165,
       padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 8),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -55,9 +54,7 @@ class QuizSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        controller.onSelectQuizAns(question.Option1);
-                      },
+                      onTap: () => controller.onSelectQuizAns(question.Option1),
                       child: AnswerWgt(
                         txt: question.Option1,
                         correctAns: controller.correctAns,
@@ -66,9 +63,7 @@ class QuizSection extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        controller.onSelectQuizAns(question.Option2);
-                      },
+                      onTap: () => controller.onSelectQuizAns(question.Option2),
                       child: AnswerWgt(
                         txt: question.Option2,
                         correctAns: controller.correctAns,
@@ -82,9 +77,7 @@ class QuizSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        controller.onSelectQuizAns(question.Option3);
-                      },
+                      onTap: () => controller.onSelectQuizAns(question.Option3),
                       child: AnswerWgt(
                         txt: question.Option3,
                         correctAns: controller.correctAns,
@@ -93,9 +86,7 @@ class QuizSection extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        controller.onSelectQuizAns(question.Option4);
-                      },
+                      onTap: () => controller.onSelectQuizAns(question.Option4),
                       child: AnswerWgt(
                         txt: question.Option4,
                         correctAns: controller.correctAns,

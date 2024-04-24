@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:upi_india/upi_india.dart';
 import '../../app_utils/color_constants.dart';
-import '../../app_utils/payment_constants.dart';
+import '../../app_utils/constants/payments.dart';
 
 class PaymentOptionController extends GetxController {
   int selectedIndex = 0;

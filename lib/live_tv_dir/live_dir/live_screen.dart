@@ -2,7 +2,7 @@ import 'package:cricket/live_tv_dir/live_match_detail/live_tv_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_utils/app_static.dart';
-import '../../app_utils/custom_carousel.dart';
+import '../../app_utils/ad_banner/index.dart';
 import '../../app_utils/scaffold.dart';
 import 'live_controller.dart';
 
@@ -24,15 +24,15 @@ class LiveScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomCarousel(
-                  boxHgt: Get.width * 0.5,
-                  boxWdt: double.maxFinite,
-                  itemList: controller.completeTournament,
-                  index: controller.completedIndex,
-                  carouselController: controller.completedCarouselController,
-                  onPageChanged: (index, _) {
-                    controller.onCompletedChange(index);
-                  },
+                const AdsSlider(
+                  // boxHgt: Get.width * 0.5,
+                  // boxWdt: double.maxFinite,
+                  // itemList: controller.completeTournament,
+                  // index: controller.completedIndex,
+                  // carouselController: controller.completedCarouselController,
+                  // onPageChanged: (index, _) {
+                  //   controller.onCompletedChange(index);
+                  // },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
@@ -87,16 +87,16 @@ class LiveScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      CustomCarousel(
-                        boxHgt: Get.width * 0.5,
-                        boxWdt: double.maxFinite,
-                        itemList: controller.completeTournament,
-                        index: controller.completedIndex,
-                        carouselController:
-                            controller.completedCarouselController,
-                        onPageChanged: (index, _) {
-                          controller.onCompletedChange(index);
-                        },
+                      const AdsSlider(
+                        // boxHgt: Get.width * 0.5,
+                        // boxWdt: double.maxFinite,
+                        // itemList: controller.completeTournament,
+                        // index: controller.completedIndex,
+                        // carouselController:
+                        //     controller.completedCarouselController,
+                        // onPageChanged: (index, _) {
+                        //   controller.onCompletedChange(index);
+                        // },
                       ),
                     ],
                   ),

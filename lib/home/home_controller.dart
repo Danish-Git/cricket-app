@@ -1,16 +1,28 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cricket/app_utils/app_static.dart';
 import 'package:cricket/home/response/quiz_question_response.dart';
-import 'package:cricket/routing_dir/app_screen_const.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../ui_models/tab_bar_model.dart';
 import 'home_repo.dart';
-import '../response_dir/get_all_tournament_response.dart';
-import 'response/notification_response.dart';
 
 class HomeController extends GetxController {
   final HomeRepo _homeRepo = HomeRepo();
+
   bool isLoading = true;
+
+  int selectedTournamentStatus = 0;
+  int selectedFilterStatus = 0;
+
+  List<TabBarModel> tournamentStatusList = [
+    TabBarModel(id: 'Running', label: 'Running', isSelected: false),
+    TabBarModel(id: 'Coming soon', label: 'Upcoming', isSelected: false),
+    TabBarModel(id: 'Complete', label: 'Complete', isSelected: false),
+    TabBarModel(id: 'Cancel', label: 'Canceled', isSelected: false),
+  ];
+
+  List<TabBarModel> filterStatusList = [
+    TabBarModel(id: 'Man', label: "Man's", isSelected: false),
+    TabBarModel(id: 'Woman', label: "Women's", isSelected: false),
+  ];
 
   /// #important
   /// String phoneNumber; // read from shared preferences
@@ -18,21 +30,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getAllNotifications();
+    initData();
   }
 
-/////   NOTIFICATION
-
-  List<NotificationList> notificationList = [];
-
-  void getAllNotifications() {
-    _homeRepo.getAllNotificationsApi().then((value) {
-      if (value.status == true) {
-        NotificationResponse notificationResponse =
-            NotificationResponse.fromJson(value.data);
-        notificationList.addAll(notificationResponse.data);
-      }
-    });
+  void initData() {
+    tournamentStatusList[selectedTournamentStatus].isSelected = true;
+    filterStatusList[selectedFilterStatus].isSelected = true;
+    quizQuestion();
   }
 
   //////
@@ -57,6 +61,7 @@ class HomeController extends GetxController {
         QuizQuestionResponse response =
             QuizQuestionResponse.fromJson(value.data);
         questionList.addAll(response.data);
+        update();
       }
     });
   }
@@ -72,218 +77,35 @@ class HomeController extends GetxController {
     });
   }
 
-  ////////// select your team
-
-  ScrollController teamListController = ScrollController();
-
-  List<String> teamList = [
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150',
-    'http://via.placeholder.com/350x150'
-  ];
-
-  ////////
-
-  int upComingIndex = 0;
-  int runningIndex = 0;
-  int completedIndex = 0;
-  int iplIndex = 0;
-  int cancelIndex = 0;
-
-  final CarouselController upComingCarouselController = CarouselController();
-  final CarouselController runningCarouselController = CarouselController();
-  final CarouselController completedCarouselController = CarouselController();
-  final CarouselController iplCarouselController = CarouselController();
-  final CarouselController cancelCarouselController = CarouselController();
-
-  void onUpComingChange(int index) {
-    upComingIndex = index;
-    update();
-  }
-
-  void onRunningChange(int index) {
-    runningIndex = index;
-    update();
-  }
-
-  void onCompletedChange(int index) {
-    completedIndex = index;
-    update();
-  }
-
-  void onIplChange(int index) {
-    iplIndex = index;
-    update();
-  }
-
-  void onCancelChange(int index) {
-    cancelIndex = index;
-    update();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    quizQuestion();
-    getAllTournament();
-  }
-
-  List<Widget> upComingTournament = [];
-  List<Widget> runningTournament = [];
-  List<Widget> completeTournament = [];
-  List<Widget> cancelTournament = [];
-  List<Widget> iplTournament = [];
-
-  /////
-
-  List<AllTournamentList> upComingList = [];
-  List<AllTournamentList> runningList = [];
-  List<AllTournamentList> completeList = [];
-  List<AllTournamentList> cancelList = [];
-  List<AllTournamentList> iplList = [];
-
-  void getAllTournament() {
-    _homeRepo.getALlTournamentsHome().then((value) {
-      if (value.status == true) {
-        GetAllTournamentResponse response =
-            GetAllTournamentResponse.fromJson(value.data);
-
-        for (var item in response.data) {
-          if (item.Status == 'UpComing') {
-            upComingList.add(item);
-          } else if (item.Status == 'Running') {
-            runningList.add(item);
-          } else if (item.Status == 'Complete') {
-            completeList.add(item);
-          } else if (item.Status == 'Cancel') {
-            cancelList.add(item);
-          }
-        }
-
-        addUpComingTournaments();
-        addRunningTournaments();
-        addCompletedTournaments();
-        addIplTournaments();
-        addCancelTournaments();
+  void onTournamentStatusChange(TabBarModel tabBarModel) {
+    int selectedIndex = 0;
+    for (int i = 0; i < tournamentStatusList.length; i++) {
+      final status = tournamentStatusList[i];
+      status.isSelected = (status == tabBarModel);
+      if (status.isSelected ?? false) {
+        selectedIndex = i;
       }
-    });
+    }
+    selectedTournamentStatus = selectedIndex;
+    update();
   }
 
-  void addUpComingTournaments() {
-    upComingTournament = upComingList
-        .map(
-          (item) => Container(
-            margin: const EdgeInsets.all(2.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(
-                item.Banner,
-                fit: BoxFit.cover,
-                width: 1000,
-              ),
-            ),
-          ),
-        )
-        .toList();
+  void onGenderToggle(int? index) {
+    for (int i = 0; i < filterStatusList.length; i++) {
+      filterStatusList[i].isSelected = (i == index);
+    }
+    selectedFilterStatus =  index ?? 0;
+    update();
   }
 
-  void addRunningTournaments() {
-    runningTournament = runningList
-        .map(
-          (item) => Container(
-            margin: const EdgeInsets.all(2.0),
-            child: GestureDetector(
-              onTap: () {
-                Get.toNamed(AppScreenConst.matchDetail);
-              },
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Image.network(
-                  item.Banner,
-                  fit: BoxFit.cover,
-                  width: 1000,
-                ),
-              ),
-            ),
-          ),
-        )
-        .toList();
-  }
-
-  void addCompletedTournaments() {
-    completeTournament = completeList
-        .map(
-          (item) => Container(
-            margin: const EdgeInsets.all(2.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(
-                item.Banner,
-                fit: BoxFit.cover,
-                width: 1000,
-              ),
-            ),
-          ),
-        )
-        .toList();
-  }
-
-  void addIplTournaments() {
-    iplTournament = completeList
-        .map(
-          (item) => Container(
-            margin: const EdgeInsets.all(2.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(
-                item.Banner,
-                fit: BoxFit.cover,
-                width: 1000,
-              ),
-            ),
-          ),
-        )
-        .toList();
-  }
-
-  void addCancelTournaments() {
-    cancelTournament = cancelList
-        .map(
-          (item) => Container(
-            margin: const EdgeInsets.all(2.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Image.network(
-                item.Banner,
-                fit: BoxFit.cover,
-                width: 1000,
-              ),
-            ),
-          ),
-        )
-        .toList();
-    Future.delayed(const Duration(seconds: 1), () {
-      isLoading = false;
-      update();
-    });
+  void onFilerStatusChange(String filterId) {
+    for (final status in tournamentStatusList) {
+      status.isSelected = (status.id == filterId);
+    }
+    update();
   }
 
   //////////
-
-  // void setQuizAnswer(int selectedAnswer, QuizQuestionList question) {
-  //   selectedAns = selectedAnswer;
-  //   update();
-  //   if (correctAnswerIndex(question) == selectedAns) {
-  //     //  correct answer
-  //   } else {
-  //     //  wrong answer
-  //   }
-  // }
 
   int correctAnswerIndex(QuizQuestionList question) {
     if (question.CorrectOption == question.Option1) {
