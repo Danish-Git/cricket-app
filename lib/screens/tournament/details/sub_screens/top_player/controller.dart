@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../../api_methods/api_methods.dart';
 import '../../../../../app_utils/helper.dart';
-import '../../../../../repositories/top_players.dart';
+import '../../../../../models/top_players.dart';
 import '../../../../../repositories/tournaments.dart';
 
 class TopPlayerScreenController extends GetxController {

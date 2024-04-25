@@ -25,6 +25,11 @@ const winnerOfTournamentsUrl = '${_baseUrl}Winner?GET=';
 const playingTeamsOfTournamentsUrl = '${_baseUrl}PlayingTeams?GET=';
 const getBoundaryTournamentsUrl = '${_baseUrl}PlayingTeams?GET=';
 
+////
+const getTeamPlayersUrl = '${_baseUrl}Team_Player_Details?GET=null';
+const getTeamDetailsUrl = '${_baseUrl}TeamDetails?GET=null';
+const getPlayerDetailsUrl = '${_baseUrl}PlayerRunsAbout?GET=null';
+
 ////// notifications
 const getALlNotificationsUrl = '${_baseUrl}Notification?GET=';
 const updateNotificationsUrl = '${_baseUrl}Notification?UpdateView=';

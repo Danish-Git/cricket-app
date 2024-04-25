@@ -1,6 +1,5 @@
 import 'package:cricket/home/home_screen.dart';
-import 'package:cricket/home/team_detail/team_detail_binding.dart';
-import 'package:cricket/home/team_detail/team_detail_screen.dart';
+import 'package:cricket/screens/team/details/index.dart';
 import 'package:cricket/login/login_screen.dart';
 import 'package:cricket/login/otp_screen.dart';
 import 'package:cricket/payment_dir/payment_done_binding.dart';
@@ -17,6 +16,7 @@ import '../login/login_binding.dart';
 import '../registration_form_dir/registration_form_binding.dart';
 import '../registration_form_dir/registration_form_screen.dart';
 import '../screens/bottom_nav_dir/index.dart';
+import '../screens/player/details/index.dart';
 import '../screens/tournament/details/index.dart';
 import '../splash/splash_screen.dart';
 import 'app_screen_const.dart';
@@ -62,7 +62,10 @@ abstract class AppPages {
     GetPage(
       name: AppScreenConst.teamDetail,
       page: () => const TeamDetailScreen(),
-      binding: TeamDetailBinding(),
+    ),
+    GetPage(
+      name: AppScreenConst.playerDetail,
+      page: () => const PlayerDetailScreen(),
     ),
     GetPage(
       name: AppScreenConst.userProfile,

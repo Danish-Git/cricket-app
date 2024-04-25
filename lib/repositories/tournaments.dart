@@ -1,4 +1,4 @@
-import 'package:cricket/repositories/top_players.dart';
+import 'package:cricket/models/top_players.dart';
 
 import '../api_methods/api_constants.dart';
 import '../api_methods/api_methods.dart';

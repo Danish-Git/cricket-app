@@ -1,9 +1,11 @@
+import 'package:cricket/app_utils/constants/navigation_params.dart';
 import 'package:get/get.dart';
 
 import '../../../../../api_methods/api_methods.dart';
 import '../../../../../app_utils/helper.dart';
 import '../../../../../models/team.dart';
 import '../../../../../repositories/tournaments.dart';
+import '../../../../../routing_dir/app_screen_const.dart';
 
 class PlayingTeamsScreenController extends GetxController {
 
@@ -48,4 +50,7 @@ class PlayingTeamsScreenController extends GetxController {
     update();
   }
 
+  void navigateToDetailScreen(TeamModel team) {
+    Get.toNamed(AppScreenConst.teamDetail, arguments: {NavParamsConstants.team: team});
+  }
 }
