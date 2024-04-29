@@ -1,20 +1,25 @@
+import 'package:cricket/app_utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../api_methods/api_constants.dart';
+import '../../../../../models/match.dart';
 import '../../live_score_board.dart';
 import 'controller.dart';
 
 class LiveTab extends StatelessWidget {
   const LiveTab({
     super.key,
+    this.match
   });
+
+  final MatchModel? match;
 
   @override
   Widget build(BuildContext context) {
 
     return GetBuilder<LiveTabController>(
       global: false,
-      init: LiveTabController(),
+      init: LiveTabController(match: match),
       builder: (controller) {
         return SingleChildScrollView(
           child: Column(
@@ -67,7 +72,9 @@ class LiveTab extends StatelessWidget {
 
               ///////  match score
 
-              const LiveScoreBoard(),
+              controller.isLoading
+                ? Helper.showLoader()
+                : LiveScoreBoard(scoreBoard: controller.scoreList),
 
               ///////////////////
               Container(
@@ -97,7 +104,7 @@ class LiveTab extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext ctx, int index) {
                             return CustomBallBox(
-                              label: controller.scoreList[index],
+                              label: controller.overList[index],
                               ballScore: controller.scoreList[index] == 'W'
                                   ? BallScore.wicket
                                   : controller.scoreList[index] == '4'

@@ -13,6 +13,7 @@ abstract class AppScreenConst {
   static const matchDetail = '/matchDetail';
   static const teamDetail = '/teamDetail';
   static const playerDetail = '/playerDetail';
+  static const liveMatchDetailsScreen = '/liveMatchDetailsScreen';
 
   ///// profile
   static const userProfile = '/userProfile';

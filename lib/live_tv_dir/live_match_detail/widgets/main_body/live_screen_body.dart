@@ -1,8 +1,10 @@
+import 'package:cricket/live_tv_dir/live_match_detail/live_tv_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../app_utils/app_static.dart';
 import '../../../../app_utils/helper.dart';
 import '../../../../app_utils/scaffold.dart';
+import '../../../../models/match.dart';
 import '../tabs/commentary/index.dart';
 import '../tabs/live/live.dart';
 import '../tabs/score_board/scoreboard.dart';
@@ -13,17 +15,19 @@ class LiveScreenBody extends StatelessWidget {
     super.key,
     required this.player,
     required this.isPlayerReady,
+    this.match,
   });
 
   final Widget player;
   final bool isPlayerReady;
+  final MatchModel? match;
 
   @override
   Widget build(BuildContext context) {
 
     return GetBuilder<LiveScreenBodyController>(
       global: false,
-      init: LiveScreenBodyController(isPlayerReady : isPlayerReady),
+      init: LiveScreenBodyController(isPlayerReady : isPlayerReady, match: match),
       builder: (controller) {
         return CustomScaffold(
           setDefaultAppBar: true,
@@ -51,10 +55,10 @@ class LiveScreenBody extends StatelessWidget {
                                 : Helper.showLoader()
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           children: [
-                            TabBar(
+                            const TabBar(
                               indicatorWeight: 4,
                               indicatorColor: Colors.green,
                               dividerColor: Colors.green,
@@ -70,7 +74,7 @@ class LiveScreenBody extends StatelessWidget {
                               child: TabBarView(
                                 children: [
                                   //////  LIVE TAB VIEW
-                                  LiveTab(),
+                                  LiveTab(match: controller.match),
 
                                   /* SECOND TAB STARTS HERE !!!!!!!!!!!    */
                                   ////////// SCOREBOARD

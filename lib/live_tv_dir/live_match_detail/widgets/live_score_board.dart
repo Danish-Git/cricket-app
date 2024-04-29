@@ -1,3 +1,4 @@
+import 'package:cricket/models/main_scores.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,10 +6,19 @@ import '../../../api_methods/api_constants.dart';
 import '../../../app_utils/app_static.dart';
 
 class LiveScoreBoard extends StatelessWidget {
-  const LiveScoreBoard({super.key});
+  const LiveScoreBoard({
+    super.key,
+    this.scoreBoard
+  });
+
+final List<MainScoresModel>? scoreBoard;
 
   @override
   Widget build(BuildContext context) {
+
+    MainScoresModel? team1Scores = scoreBoard?.isEmpty ?? true ? null : scoreBoard?.first;
+    MainScoresModel? team2Scores = scoreBoard?.isEmpty ?? true ? null : scoreBoard?.last;
+
     return Column(
       children: [
         Row(
@@ -17,23 +27,23 @@ class LiveScoreBoard extends StatelessWidget {
             ////////// left side
             SizedBox(
               width: Get.width * 0.38,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '233  / ',
-                        style: TextStyle(
+                        '${team1Scores?.runs ?? '0'}  / ',
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
                           color: Colors.black,
                         ),
                       ),
                       Text(
-                        '4',
-                        style: TextStyle(
+                        team1Scores?.pOut ?? '0',
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
                           color: Colors.grey,
@@ -42,8 +52,8 @@ class LiveScoreBoard extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '36.5 OVERS',
-                    style: TextStyle(
+                    '${team1Scores?.overs ?? '0'} OVERS',
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey,
@@ -58,23 +68,23 @@ class LiveScoreBoard extends StatelessWidget {
             /////////// right side
             SizedBox(
               width: Get.width * 0.38,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '233  / ',
-                        style: TextStyle(
+                        '${team2Scores?.runs ?? '0'}  / ',
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
                           color: Colors.black,
                         ),
                       ),
                       Text(
-                        '4',
-                        style: TextStyle(
+                        team2Scores?.pOut ?? '0',
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
                           color: Colors.grey,
@@ -83,8 +93,8 @@ class LiveScoreBoard extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '36.5 OVERS',
-                    style: TextStyle(
+                    '${team1Scores?.overs ?? '0'} OVERS',
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey,
@@ -103,7 +113,7 @@ class LiveScoreBoard extends StatelessWidget {
           child: Divider(color: Colors.grey),
         ),
         const Text(
-          'BAN NEEDS 150 RUNS IN 15.1 OVERS',
+          'BAN NEEDS 0 RUNS IN 0 OVERS',
           style: TextStyle(
             fontSize: 14,
             color: Colors.green,

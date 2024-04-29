@@ -1,61 +1,53 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:cricket/app_utils/constants/navigation_params.dart';
 import 'package:get/get.dart';
 
+import '../../api_methods/api_methods.dart';
+import '../../app_utils/helper.dart';
+import '../../models/match.dart';
+import '../../repositories/match.dart';
+import '../../routing_dir/app_screen_const.dart';
+
 class LiveController extends GetxController {
-/////////////////
+
+  final String tournamentID = '3';
+
+  bool isLoading = false;
+
+  List<MatchModel> matchList = [];
+  
   @override
   void onInit() {
     super.onInit();
-    // getAllTournament();
+    getMatchList();
   }
 
-  List<Widget> completeTournament = [];
-  // List<AllTournamentList> completeList = [];
+  void getMatchList() async {
+    try {
+      matchList.clear();
+      toggleLoading();
+      Map<String, dynamic> params = {
+        'TournamentsID': tournamentID
+      };
 
-  int completedIndex = 0;
+      ApiResponse response = await MatchRepository().getMatchList(params);
+      if(response.status) {
+        matchList = response.data;
+      } else {
+        Helper.showToast(response.message ?? '');
+      }
+    } catch (e) {
+      Helper.showToast(e.toString());
+      rethrow;
+    } finally {
+      toggleLoading();
+    }
+  }
 
-  final CarouselController completedCarouselController = CarouselController();
-
-  void onCompletedChange(int index) {
-    completedIndex = index;
+  void toggleLoading() {
+    isLoading = !isLoading;
     update();
   }
-
-  // void getAllTournament() {
-  //   HomeRepo().getALlTournamentsHome().then((value) {
-  //     if (value.status == true) {
-  //       GetAllTournamentResponse response =
-  //           GetAllTournamentResponse.fromJson(value.data);
-  //
-  //       for (var item in response.data) {
-  //         if (item.Status == 'Complete') {
-  //           completeList.add(item);
-  //         }
-  //       }
-  //       addCompletedTournaments();
-  //     }
-  //   });
-  // }
-
-  // void addCompletedTournaments() {
-  //   completeTournament = completeList
-  //       .map(
-  //         (item) => Container(
-  //           margin: const EdgeInsets.all(2.0),
-  //           child: ClipRRect(
-  //             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-  //             child: Image.network(
-  //               item.Banner,
-  //               fit: BoxFit.cover,
-  //               width: 1000,
-  //             ),
-  //           ),
-  //         ),
-  //       )
-  //       .toList();
-  // }
-
+  
   //////////////////
 
   List<String> images = [
@@ -64,4 +56,11 @@ class LiveController extends GetxController {
     'https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png',
     'https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png'
   ];
+
+  onTapMatch(MatchModel match) {
+    Get.toNamed(AppScreenConst.liveMatchDetailsScreen, arguments: {
+      NavParamsConstants.liveMatch : match,
+      NavParamsConstants.isLive : true,
+    });
+  }
 }

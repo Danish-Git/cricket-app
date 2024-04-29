@@ -12,6 +12,7 @@ import 'package:cricket/user_profile/user_profile_screen.dart';
 import 'package:cricket/welcome/welcome_binding.dart';
 import 'package:cricket/welcome/welcome_screen.dart';
 import 'package:get/get.dart';
+import '../live_tv_dir/live_match_detail/live_tv_screen.dart';
 import '../login/login_binding.dart';
 import '../registration_form_dir/registration_form_binding.dart';
 import '../registration_form_dir/registration_form_screen.dart';
@@ -66,6 +67,10 @@ abstract class AppPages {
     GetPage(
       name: AppScreenConst.playerDetail,
       page: () => const PlayerDetailScreen(),
+    ),
+    GetPage(
+      name: AppScreenConst.liveMatchDetailsScreen,
+      page: () => const LiveTvScreen(),
     ),
     GetPage(
       name: AppScreenConst.userProfile,

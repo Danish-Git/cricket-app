@@ -18,7 +18,11 @@ class LiveTvScreen extends StatelessWidget {
           controller: controller.videoPlayerController,
           aspectRatio: Get.height / Get.width,
           builder: (context, player) {
-            return LiveScreenBody(player: player, isPlayerReady: controller.isPlayerReady);
+            return LiveScreenBody(
+              player: player,
+              isPlayerReady: controller.isPlayerReady,
+              match: controller.match
+            );
           },
         ),
       )
