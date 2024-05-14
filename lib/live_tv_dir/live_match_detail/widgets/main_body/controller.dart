@@ -5,6 +5,7 @@ import '../../../../models/match.dart';
 class LiveScreenBodyController extends GetxController {
   bool isLoading = false;
   bool isPlayerReady = false;
+  bool isLiveMatch = false;
 
   final MatchModel? match;
 
@@ -13,6 +14,11 @@ class LiveScreenBodyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    initData();
+  }
+
+  void initData() {
+    isLiveMatch = match?.matchStatus == 'Running';
   }
 
 

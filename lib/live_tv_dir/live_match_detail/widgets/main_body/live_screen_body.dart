@@ -51,7 +51,7 @@ class LiveScreenBody extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(16),
                             child: controller.isPlayerReady
-                                ? player
+                                ? Container() //player
                                 : Helper.showLoader()
                         ),
                       ),
@@ -74,7 +74,7 @@ class LiveScreenBody extends StatelessWidget {
                               child: TabBarView(
                                 children: [
                                   //////  LIVE TAB VIEW
-                                  LiveTab(match: controller.match),
+                                  LiveTab(match: controller.match, isLiveMatch : controller.isLiveMatch),
 
                                   /* SECOND TAB STARTS HERE !!!!!!!!!!!    */
                                   ////////// SCOREBOARD

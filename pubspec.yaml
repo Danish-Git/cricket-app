@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^2.24.1
   firebase_messaging: ^14.6.7
   firebase_auth: ^4.15.2
+  firebase_database: ^10.4.0
 
   #  get package
   get: ^4.6.5

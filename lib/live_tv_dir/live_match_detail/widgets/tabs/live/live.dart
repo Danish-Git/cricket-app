@@ -3,23 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../api_methods/api_constants.dart';
 import '../../../../../models/match.dart';
+import '../../Helper_Widget/custom_box.dart';
 import '../../live_score_board.dart';
 import 'controller.dart';
+import 'widget/batsman_score_board.dart';
+import 'widget/bowlers_score_board.dart';
 
 class LiveTab extends StatelessWidget {
   const LiveTab({
     super.key,
-    this.match
+    this.match,
+    this.isLiveMatch,
   });
 
   final MatchModel? match;
+  final bool? isLiveMatch;
 
   @override
   Widget build(BuildContext context) {
 
     return GetBuilder<LiveTabController>(
       global: false,
-      init: LiveTabController(match: match),
+      init: LiveTabController(match: match, isLiveMatch: isLiveMatch),
+      dispose: (GetBuilderState<LiveTabController> state) => state.controller?.dispose(),
       builder: (controller) {
         return SingleChildScrollView(
           child: Column(
@@ -119,236 +125,14 @@ class LiveTab extends StatelessWidget {
                 ),
               ),
 
-              Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                alignment: Alignment.center,
-                color: Colors.grey.shade300,
-                child: const Row(
-                  children: [
-                    Text(
-                      'Batsman',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Spacer(),
-                    CustomBox(label: 'R', isLabel: true),
-                    CustomBox(label: 'B', isLabel: true),
-                    CustomBox(label: '4s', isLabel: true),
-                    CustomBox(label: '6s', isLabel: true),
-                    CustomBox(label: 'SR', isLabel: true),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1.5,
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(helmet),
-                    ),
-                    Text(
-                      '  Batsmen Name Long Text',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Spacer(),
-                    CustomBox(label: '122', isLabel: false),
-                    CustomBox(label: '111', isLabel: false),
-                    CustomBox(label: '23', isLabel: false),
-                    CustomBox(label: '23', isLabel: false),
-                    CustomBox(
-                      label: '444.4',
-                      isLabel: false,
-                      isLast: true,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1.5,
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(helmet),
-                    ),
-                    Text(
-                      '  Batsmen Name',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Spacer(),
-                    CustomBox(label: '122', isLabel: false),
-                    CustomBox(label: '111', isLabel: false),
-                    CustomBox(label: '23', isLabel: false),
-                    CustomBox(label: '23', isLabel: false),
-                    CustomBox(
-                      label: '444.4',
-                      isLabel: false,
-                      isLast: true,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Current Partnership   ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      '76(42)',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
+              BatsmanScoreBoard(
+                batsmanList: controller.batsmanList,
+                totalRuns: controller.totalRuns.toString(),
+                totalBalls: controller.totalBalls.toString(),
               ),
 
               //// bowler part
-              Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                alignment: Alignment.center,
-                color: Colors.grey.shade300,
-                child: const Row(
-                  children: [
-                    Text(
-                      'Bowlers',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Spacer(),
-                    CustomBox(label: 'O', isLabel: true),
-                    CustomBox(label: 'M', isLabel: true),
-                    CustomBox(label: 'R', isLabel: true),
-                    CustomBox(label: 'W', isLabel: true),
-                    CustomBox(label: 'ECO', isLabel: true),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1.5,
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(helmet),
-                    ),
-                    Text(
-                      '  Bowler Name Long Text',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Spacer(),
-                    CustomBox(label: '1', isLabel: false),
-                    CustomBox(label: '2', isLabel: false),
-                    CustomBox(label: '3', isLabel: false),
-                    CustomBox(label: '1', isLabel: false),
-                    CustomBox(
-                      label: '5.7',
-                      isLabel: false,
-                      isLast: true,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1.5,
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(helmet),
-                    ),
-                    Text(
-                      '  Bowler Name',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Spacer(),
-                    CustomBox(label: '1', isLabel: false),
-                    CustomBox(label: '2', isLabel: false),
-                    CustomBox(label: '3', isLabel: false),
-                    CustomBox(label: '1', isLabel: false),
-                    CustomBox(
-                      label: '5.7',
-                      isLabel: false,
-                      isLast: true,
-                    ),
-                  ],
-                ),
-              ),
+              BowlersScoreBoard(bowlersList: controller.bowlersList),
 
               ///////
 
