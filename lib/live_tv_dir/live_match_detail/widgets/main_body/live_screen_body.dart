@@ -74,11 +74,11 @@ class LiveScreenBody extends StatelessWidget {
                               child: TabBarView(
                                 children: [
                                   //////  LIVE TAB VIEW
-                                  LiveTab(match: controller.match, isLiveMatch : controller.isLiveMatch),
+                                  LiveTab(match: controller.match, isLiveMatch: controller.isLiveMatch),
 
                                   /* SECOND TAB STARTS HERE !!!!!!!!!!!    */
                                   ////////// SCOREBOARD
-                                  LiveScoreboardTab(),
+                                  LiveScoreboardTab(match: controller.match, isLiveMatch: controller.isLiveMatch),
 
                                   /* THIRD TAB STARTS HERE !!!!!!!!!!!    */
                                   ////////// COMMENTARY

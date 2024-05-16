@@ -1,8 +1,8 @@
 import 'package:cricket/app_utils/helper.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../models/payer_scores.dart';
-import '../../../Helper_Widget/custom_box.dart';
+import '../../../../models/payer_scores.dart';
+import 'custom_box.dart';
 
 class BowlersScoreBoard extends StatelessWidget {
   const BowlersScoreBoard({

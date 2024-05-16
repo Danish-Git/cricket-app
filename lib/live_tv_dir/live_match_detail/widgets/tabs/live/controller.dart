@@ -1,3 +1,4 @@
+import 'package:cricket/live_tv_dir/live_match_detail/helper/helper.dart';
 import 'package:cricket/models/payer_scores.dart';
 import 'package:get/get.dart';
 
@@ -15,10 +16,15 @@ class LiveTabController extends GetxController {
   List<String> overList = ['1', 'W', '4', '6', 'Wd', '3', 'W', '2', 'Wd', '6'];
 
   bool isLoading = false;
+  bool shouldLoadMoreBatsmanData = true;
+  bool isBatsmanDataLoading = false;
+  bool shouldLoadMoreBowlersData = true;
+  bool isBowlersDataLoading = false;
   bool? isLiveMatch = false;
 
   num totalRuns = 0;
   num totalBalls = 0;
+  String overs = '0';
 
   List<MainScoresModel> scoreList = [];
   List<PayerScores> batsmanList = [];
@@ -35,7 +41,6 @@ class LiveTabController extends GetxController {
   }
 
   Future<void> initData () async {
-
     if(isLiveMatch ?? false) {
       firebaseMatchRepository = FirebaseMatchRepository();
       getDataForLiveMatch();
@@ -45,6 +50,8 @@ class LiveTabController extends GetxController {
   }
 
   Future<void> getDataForLiveMatch() async {
+    toggleIsBatsmanDataLoading();
+    toggleIsBowlersDataLoading();
     firebaseMatchRepository?.getBatsmanData(matchId: match?.matchID, onDataChange: onLiveBatsmanDataChange);
     firebaseMatchRepository?.getBowlersData(matchId: match?.matchID, onDataChange: onLiveBowlerDataChange);
   }
@@ -83,25 +90,42 @@ class LiveTabController extends GetxController {
 
 
   void onLiveBatsmanDataChange(List<PayerScores> playerList) {
+
+    scoreList = LiveMatchHelper.getMatchSores(playerList, match);
+
     batsmanList = playerList;
     totalRuns = totalBalls = 0;
     for (var element in batsmanList) {
-      totalRuns += num.parse(element.r ?? '0');
-      totalBalls += num.parse(element.b ?? '0');
+      totalRuns += num.tryParse(element.r?.toString() ?? '0') ?? 0;
+      totalBalls += num.tryParse(element.b?.toString() ?? '0') ?? 0;
+    }
+    if(shouldLoadMoreBatsmanData) {
+      shouldLoadMoreBatsmanData = !shouldLoadMoreBatsmanData;
+      toggleIsBatsmanDataLoading();
     }
     update();
   }
 
   void onLiveBowlerDataChange(List<PayerScores> playerList) {
     bowlersList = playerList;
+    if(shouldLoadMoreBowlersData) {
+      shouldLoadMoreBowlersData = !shouldLoadMoreBowlersData;
+      toggleIsBowlersDataLoading();
+    }
     update();
   }
 
-  @override
-  void dispose() {
-    firebaseMatchRepository?.onDispose();
-    super.dispose();
+  void toggleIsBatsmanDataLoading() {
+    isBatsmanDataLoading = !isBatsmanDataLoading;
+    update();
   }
 
+  void toggleIsBowlersDataLoading() {
+    isBowlersDataLoading = !isBowlersDataLoading;
+    update();
+  }
 
+  void disposeStream() async {
+    await firebaseMatchRepository?.onDispose();
+  }
 }

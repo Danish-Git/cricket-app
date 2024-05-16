@@ -41,10 +41,8 @@ class FirebaseMatchRepository {
     refer ??= FirebaseDatabase.instance.ref('TeamRun(Danish)/');
   }
 
-  onDispose() {
-    batsmanStream?.cancel();
-    bowlersStream?.cancel();
+  Future<void> onDispose() async {
+    await batsmanStream?.cancel();
+    await bowlersStream?.cancel();
   }
-
-
 }

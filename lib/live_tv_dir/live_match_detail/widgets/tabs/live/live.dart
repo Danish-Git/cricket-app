@@ -1,13 +1,11 @@
 import 'package:cricket/app_utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../api_methods/api_constants.dart';
 import '../../../../../models/match.dart';
-import '../../Helper_Widget/custom_box.dart';
 import '../../live_score_board.dart';
 import 'controller.dart';
-import 'widget/batsman_score_board.dart';
-import 'widget/bowlers_score_board.dart';
+import '../../../helper/widgets/batsman_score_board.dart';
+import '../../../helper/widgets/bowlers_score_board.dart';
 
 class LiveTab extends StatelessWidget {
   const LiveTab({
@@ -25,7 +23,7 @@ class LiveTab extends StatelessWidget {
     return GetBuilder<LiveTabController>(
       global: false,
       init: LiveTabController(match: match, isLiveMatch: isLiveMatch),
-      dispose: (GetBuilderState<LiveTabController> state) => state.controller?.dispose(),
+      dispose: (GetBuilderState<LiveTabController> state) async => state.controller?.disposeStream(),
       builder: (controller) {
         return SingleChildScrollView(
           child: Column(
@@ -124,15 +122,24 @@ class LiveTab extends StatelessWidget {
                   ],
                 ),
               ),
+              if(controller.isBatsmanDataLoading)...{
+                Helper.showLoader()
+              } else ... {
+                BatsmanScoreBoard(
+                  batsmanList: controller.batsmanList,
+                  totalRuns: controller.totalRuns.toString(),
+                  totalBalls: controller.totalBalls.toString(),
+                  isLiveTab: true,
+                )
+              },
 
-              BatsmanScoreBoard(
-                batsmanList: controller.batsmanList,
-                totalRuns: controller.totalRuns.toString(),
-                totalBalls: controller.totalBalls.toString(),
-              ),
 
               //// bowler part
-              BowlersScoreBoard(bowlersList: controller.bowlersList),
+              if(controller.isBowlersDataLoading)...{
+                Helper.showLoader()
+              } else ...{
+                BowlersScoreBoard(bowlersList: controller.bowlersList),
+              },
 
               ///////
 

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../api_methods/api_constants.dart';
 import '../../../app_utils/app_static.dart';
-import 'Helper_Widget/custom_box.dart';
+import '../helper/widgets/custom_box.dart';
 
 class LiveScoreBoard extends StatelessWidget {
   const LiveScoreBoard({
@@ -94,7 +94,7 @@ final List<MainScoresModel>? scoreBoard;
                     ],
                   ),
                   Text(
-                    '${team1Scores?.overs ?? '0'} OVERS',
+                    '${team2Scores?.overs ?? '0'} OVERS',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -313,64 +313,6 @@ class YetToBatItem extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-////////////// BOWLER ITEM
-
-class BowlerItem extends StatelessWidget {
-  const BowlerItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            width: 1.5,
-            color: Colors.grey.shade300,
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          Row(
-            children: [
-              const CircleAvatar(
-                radius: 16,
-                backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(helmet),
-              ),
-              SizedBox(
-                width: Get.width * 0.35,
-                child: const Text(
-                  '    Batsmen Name',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          const CustomBox(label: '5', isLabel: false),
-          const CustomBox(label: '111', isLabel: false),
-          const CustomBox(label: '23', isLabel: false),
-          const CustomBox(label: '23', isLabel: false),
-          const CustomBox(
-            label: '44.4',
-            isLabel: false,
-            isLast: true,
           ),
         ],
       ),
